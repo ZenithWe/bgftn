@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BG Complemento — Módulos Faltantes</title>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  BG - Beginning Game | MÓDULOS COMPLEMENTARES                   ║
+  ║  Este arquivo contém os 4 módulos que faltam no projeto base:    ║
+  ║                                                                  ║
+  ║  1. ASSISTENTE IA REAL — Claude via Anthropic API               ║
+  ║  2. ADMIN EXPANDIDO — Categorias, Produtos Digitais, Textos     ║
+  ║  3. PIX QR CODE REAL — Geração via API pix.ae (gratuita)        ║
+  ║  4. INSTRUÇÕES DE INTEGRAÇÃO — Como colar no arquivo base       ║
+  ║                                                                  ║
+  ║  COMO USAR:                                                      ║
+  ║  Cada módulo está claramente delimitado com comentários          ║
+  ║  indicando exatamente onde colar no bg-beginning-game.html      ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#000;--yellow:#FFD700;--red:#D90429;
+  --dark:#0a0a0a;--card:#111;--card2:#181818;
+  --border:rgba(255,215,0,0.15);--border2:rgba(255,215,0,0.3);
+  --text:#f0f0f0;--muted:#888;--muted2:#bbb;
+  --green:#00c853;--blue:#1e90ff;
+  --r:12px;--r2:8px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--dark);font-family:'Barlow',sans-serif;color:var(--text);line-height:1.6}
+a{color:var(--yellow);text-decoration:none}
+code,pre{font-family:'JetBrains Mono',monospace}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#111}::-webkit-scrollbar-thumb{background:var(--yellow);border-radius:3px}
+
+/* ── LAYOUT ── */
+.doc{max-width:960px;margin:0 auto;padding:40px 24px}
+.top-bar{background:#000;border-bottom:2px solid var(--yellow);padding:16px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.top-bar .logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--yellow)}
+.top-bar .sub{font-size:13px;color:var(--muted2)}
+.top-bar .badge{margin-left:auto;background:rgba(0,200,83,0.15);border:1px solid rgba(0,200,83,0.4);color:var(--green);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:1px}
+
+.nav-index{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:40px}
+.nav-index h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--yellow);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.nav-index ol{padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.nav-index li{font-size:14px}
+.nav-index li a{color:var(--muted2)}
+.nav-index li a:hover{color:var(--yellow)}
+
+.module{margin-bottom:60px;scroll-margin-top:80px}
+.module-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.module-num{width:48px;height:48px;border-radius:12px;background:var(--yellow);color:#000;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.module-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1}
+.module-desc{font-size:14px;color:var(--muted2);margin-top:4px}
+.module-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:4px;margin-top:6px}
+.badge-new{background:rgba(0,200,83,0.15);color:var(--green);border:1px solid rgba(0,200,83,0.3)}
+.badge-replace{background:rgba(255,215,0,0.15);color:var(--yellow);border:1px solid rgba(255,215,0,0.3)}
+.badge-expand{background:rgba(30,144,255,0.15);color:var(--blue);border:1px solid rgba(30,144,255,0.3)}
+
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.step-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.step-title i{color:var(--yellow);font-size:16px}
+.step-desc{font-size:13px;color:var(--muted2);margin-bottom:12px;line-height:1.7}
+.where-tag{background:#0d0d0d;border:1px solid rgba(255,215,0,0.2);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--yellow);font-family:'JetBrains Mono',monospace;margin-bottom:10px}
+.where-tag::before{content:'📍 LOCALIZAÇÃO: ';color:var(--muted);font-family:'Barlow',sans-serif;font-weight:700;font-size:11px}
+
+pre.code-block{background:#050505;border:1px solid var(--border);border-radius:var(--r2);padding:20px;overflow-x:auto;font-size:12px;line-height:1.7;color:#e0e0e0;position:relative;margin-top:8px}
+pre.code-block .cm{color:#555}
+pre.code-block .kw{color:#ff79c6}
+pre.code-block .str{color:#f1fa8c}
+pre.code-block .fn{color:#50fa7b}
+pre.code-block .var{color:#8be9fd}
+pre.code-block .num{color:#bd93f9}
+pre.code-block .tag{color:#ff5555}
+pre.code-block .attr{color:#ffb86c}
+
+.copy-btn{position:absolute;top:12px;right:12px;background:rgba(255,215,0,0.1);border:1px solid var(--border2);color:var(--yellow);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;transition:all .2s}
+.copy-btn:hover{background:rgba(255,215,0,0.2)}
+.code-wrap{position:relative}
+
+.alert{border-radius:var(--r2);padding:14px 16px;font-size:13px;margin:12px 0;display:flex;gap:10px;align-items:flex-start}
+.alert i{font-size:16px;flex-shrink:0;margin-top:1px}
+.alert-yellow{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);color:#e0c800}
+.alert-green{background:rgba(0,200,83,0.08);border:1px solid rgba(0,200,83,0.25);color:#00c853}
+.alert-red{background:rgba(217,4,41,0.08);border:1px solid rgba(217,4,41,0.25);color:#ff4060}
+.alert-blue{background:rgba(30,144,255,0.08);border:1px solid rgba(30,144,255,0.25);color:#4da6ff}
+
+/* ── DEMO WIDGETS ── */
+.demo-wrap{background:#000;border:2px solid var(--border2);border-radius:16px;overflow:hidden;margin:20px 0}
+.demo-label{background:rgba(255,215,0,0.08);border-bottom:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--yellow);display:flex;align-items:center;gap:6px}
+
+/* AI Chat demo */
+.ai-demo{padding:20px;max-width:400px}
+.ai-demo-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.ai-av-d{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--yellow),#ffc200);display:flex;align-items:center;justify-content:center;font-size:20px}
+.ai-demo-msgs{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;max-height:200px;overflow-y:auto}
+.ai-demo-msg{padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.6;max-width:85%}
+.ai-demo-msg.bot{background:#0d0d0d;border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:4px}
+.ai-demo-msg.user{background:var(--yellow);color:#000;font-weight:600;align-self:flex-end;border-bottom-right-radius:4px}
+.ai-demo-input{display:flex;gap:8px;padding:8px;background:#050505;border:1px solid var(--border);border-radius:50px}
+.ai-demo-input input{flex:1;background:none;border:none;color:var(--text);font-size:13px;font-family:'Barlow',sans-serif;outline:none;padding:0 8px}
+.ai-demo-send{width:32px;height:32px;border-radius:50%;background:var(--yellow);border:none;cursor:pointer;color:#000;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
+.ai-demo-send:hover{transform:scale(1.1)}
+.ai-thinking{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#0d0d0d;border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--muted);align-self:flex-start}
+.ai-thinking span{width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:blink 1.2s infinite}
+.ai-thinking span:nth-child(2){animation-delay:.2s}
+.ai-thinking span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* PIX demo */
+.pix-demo{padding:24px;text-align:center}
+.pix-demo-qr{width:140px;height:140px;margin:0 auto 12px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);background:#fff;display:flex;align-items:center;justify-content:center}
+.pix-demo-qr img{width:100%;height:100%;object-fit:contain}
+.pix-demo-key{font-size:13px;color:var(--muted2);margin-bottom:8px}
+.pix-demo-copy{background:rgba(255,215,0,0.1);border:1px solid var(--border2);color:var(--yellow);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif}
+
+/* Admin tabs demo */
+.admin-demo{padding:0}
+.admin-demo-tabs{display:flex;background:#050505;border-bottom:1px solid var(--border)}
+.admin-demo-tab{padding:12px 16px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .2s}
+.admin-demo-tab.active{color:var(--yellow);border-bottom-color:var(--yellow)}
+.admin-demo-body{padding:20px}
+.admin-demo-table{width:100%;font-size:12px;border-collapse:collapse}
+.admin-demo-table th{text-align:left;padding:8px 10px;color:var(--muted);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.5px}
+.admin-demo-table td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted2)}
+.tag-cat{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
+.tag-plan{background:rgba(30,144,255,.15);color:#4da6ff}
+.tag-digital{background:rgba(0,200,83,.15);color:#00c853}
+.tag-bundle{background:rgba(255,215,0,.15);color:var(--yellow)}
+.btn-sm{padding:5px 10px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:4px;font-family:'Barlow',sans-serif}
+.btn-edit{background:rgba(255,215,0,.1);color:var(--yellow)}
+.btn-del{background:rgba(217,4,41,.1);color:#ff4060}
+
+.checklist{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.check-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted2)}
+.check-item.done i{color:var(--green)}
+.check-item.missing i{color:rgba(255,215,0,.5)}
+.check-item strong{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <div class="logo">BG · Beginning Game</div>
+    <div class="sub">Módulos Complementares — Guia de Integração</div>
+  </div>
+  <div class="badge">4 módulos prontos</div>
+</div>
+
+<div class="doc">
+
+  <!-- ── ÍNDICE ── -->
+  <div class="nav-index">
+    <h3><i class="ti ti-map-2"></i> O que este arquivo entrega</h3>
+    <ol>
+      <li><a href="#mod1">Módulo 1 — Assistente IA Real (Claude / Anthropic API)</a></li>
+      <li><a href="#mod2">Módulo 2 — Admin Expandido (Categorias + Produtos Digitais)</a></li>
+      <li><a href="#mod3">Módulo 3 — PIX QR Code Real (geração automática)</a></li>
+      <li><a href="#mod4">Módulo 4 — Melhorias menores (validações, perfil, textos dinâmicos)</a></li>
+    </ol>
+    <div class="alert alert-green" style="margin-top:16px">
+      <i class="ti ti-info-circle"></i>
+      <span>Cada módulo inclui: <strong>onde colar</strong>, <strong>o código completo</strong> e um <strong>preview funcional</strong> do resultado.</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MÓDULO 1 — IA REAL
+  ══════════════════════════════════════════ -->
+  <div class="module" id="mod1">
+    <div class="module-header">
+      <div class="module-num">1</div>
+      <div>
+        <div class="module-title">Assistente IA Real</div>
+        <div class="module-desc">Substitui o sistema de respostas fixas (if/else) por chamadas reais à API da Anthropic (Claude). O assistente passa a entender perguntas abertas com contexto completo sobre a BG.</div>
+        <span class="module-badge badge-replace">Substitui código existente</span>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <div class="demo-label"><i class="ti ti-eye"></i> Preview do assistente real</div>
+      <div class="ai-demo">
+        <div class="ai-demo-header">
+          <div class="ai-av-d">🤖</div>
+          <div>
+            <div style="font-weight:700;font-size:14px">BG Assistant</div>
+            <div style="font-size:11px;color:var(--green)">● Powered by Claude</div>
+          </div>
+        </div>
+        <div class="ai-demo-msgs" id="demoMsgs">
+          <div class="ai-demo-msg bot">Olá! Sou o assistente da <strong>BG - Beginning Game</strong> 🎮<br>Tire suas dúvidas sobre planos, pagamentos e como funciona tudo aqui!</div>
+        </div>
+        <div class="ai-demo-input">
+          <input id="demoInput" placeholder="Pergunte qualquer coisa..." onkeydown="if(event.key==='Enter')demoSend()"/>
+          <button class="ai-demo-send" onclick="demoSend()"><i class="ti ti-send"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-map-pin"></i> Passo 1 — Localizar onde substituir</div>
+      <div class="step-desc">No arquivo <strong>bg-beginning-game.html</strong>, localize a função <code>getAIResponse</code> e toda a seção de envio de mensagens da IA. Você vai <strong>substituir</strong> essas funções pelas novas abaixo.</div>
+      <div class="where-tag">Dentro da tag &lt;script&gt;, procure por: // ============ AI CHAT ============</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 2 — Substituir toda a seção AI CHAT</div>
+      <div class="step-desc">Apague tudo entre <code>// ============ AI CHAT ============</code> e o próximo bloco de comentário, e cole o código abaixo no lugar:</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code1')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code1">// ============ AI CHAT (CLAUDE API — REAL) ============
+
+// System prompt com todo o contexto da BG para o Claude
+const BG_SYSTEM_PROMPT = `Você é o assistente virtual da BG - Beginning Game, 
+uma empresa brasileira especializada em mentorias, VOD Reviews e treinamento 
+competitivo para Fortnite. Responda sempre em português do Brasil, de forma 
+clara, amigável e direta.
+
+=== PLANOS DISPONÍVEIS ===
+
+PLANO 1 — BG Review 45min — R$ 29,90
+- VOD Review de 45 minutos
+- Análise de tomada de decisão
+- Identificação dos principais erros
+- Primeiros ajustes para evolução
+
+PLANO 2 — BG Review Pro — R$ 55,90
+- Tudo do plano anterior
+- Análise detalhada de erros e acertos
+- Bloco de notas com erros e acertos
+- Noções de Early Game, Mid Game e End Game
+- Plano de melhoria para IGL e Fragger
+
+PLANO 3 — BG Elite — R$ 189,90 (RECOMENDADO)
+- Tudo do plano anterior
+- 4 sessões completas de VOD Review
+- Maximização de drop e rotates
+- Estratégias de Mid Game
+- Rotina de treino personalizada
+- Acompanhamento pessoal durante todo o pacote
+- Evolução monitorada sessão após sessão
+
+=== INFORMAÇÕES IMPORTANTES ===
+- Pagamento via PIX
+- Para comprar: entrar na DM do Discord com o usuário BGFTN
+- Informar qual plano e se será SOLO ou DUO
+- Enviar comprovante do PIX obrigatoriamente
+- Acesso liberado em até 24 horas
+- O cargo no servidor é individual (mesmo em DUO, só quem comprou recebe o cargo)
+- Em planos DUO, ambos participam das calls de VOD Review
+- Servidor Discord: discord.gg/CfRMETMYF
+
+=== REGRAS DE RESPOSTA ===
+- Seja direto e objetivo
+- Use emojis com moderação para deixar mais amigável
+- Se não souber, direcione para o Discord
+- Nunca invente informações
+- Máximo 150 palavras por resposta`;
+
+// Histórico da conversa para contexto multi-turno
+let aiHistory = [];
+
+async function sendAIMsg() {
+  const inp = document.getElementById('aiInput');
+  const msg = inp.value.trim();
+  if (!msg) return;
+
+  addAIMsg(msg, 'user');
+  inp.value = '';
+  document.getElementById('aiSugs').style.display = 'none';
+
+  // Adiciona ao histórico
+  aiHistory.push({ role: 'user', content: msg });
+
+  // Mostra indicador de digitando
+  const thinkId = showAIThinking();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        system: BG_SYSTEM_PROMPT,
+        messages: aiHistory
+      })
+    });
+
+    removeAIThinking(thinkId);
+
+    if (!response.ok) throw new Error('API error ' + response.status);
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Desculpe, tente novamente!';
+
+    aiHistory.push({ role: 'assistant', content: reply });
+    // Limita histórico a 10 mensagens para não explodir o contexto
+    if (aiHistory.length > 10) aiHistory = aiHistory.slice(-10);
+
+    addAIMsg(reply, 'bot');
+
+  } catch (err) {
+    removeAIThinking(thinkId);
+    // Fallback para respostas locais se API falhar
+    aiHistory.pop(); // remove mensagem sem resposta
+    const fallback = getFallbackResponse(msg);
+    addAIMsg(fallback, 'bot');
+  }
+}
+
+// Fallback local caso a API falhe (mantém experiência)
+function getFallbackResponse(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('plano') || m.includes('preço') || m.includes('valor'))
+    return '📋 Temos 3 planos: Review 45min (R$29,90), Review Pro (R$55,90) e BG Elite (R$189,90). Para detalhes completos, veja a seção de Planos no site ou entre no Discord!';
+  if (m.includes('pagamento') || m.includes('pix'))
+    return '💳 O pagamento é via PIX! Fale com o BGFTN no Discord, informe o plano desejado e se é SOLO ou DUO. Após o PIX, envie o comprovante para liberação em até 24h.';
+  if (m.includes('discord') || m.includes('servidor'))
+    return '🎮 Acesse: discord.gg/CfRMETMYF — Após entrar, mande DM para o BGFTN com seu comprovante.';
+  return '🤖 No momento estou com dificuldade de conexão. Fale diretamente com o BGFTN no Discord para ajuda imediata: discord.gg/CfRMETMYF';
+}
+
+// Indicador de "digitando..."
+function showAIThinking() {
+  const id = 'think_' + Date.now();
+  const box = document.getElementById('aiMsgs');
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'ai-thinking';
+  div.innerHTML = `<span></span><span></span><span></span> digitando...`;
+  div.style.cssText = 'display:flex;align-items:center;gap:5px;padding:9px 12px;background:#0d0d0d;border:1px solid rgba(255,215,0,0.1);border-radius:12px;font-size:12px;color:var(--muted);align-self:flex-start;border-bottom-left-radius:4px;margin-bottom:2px';
+  div.querySelector('span').style.cssText = 'width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:blink 1.2s infinite;display:inline-block';
+  div.querySelectorAll('span').forEach((s,i) => {
+    s.style.cssText = `width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:blink 1.2s ${i*0.2}s infinite;display:inline-block`;
+  });
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return id;
+}
+function removeAIThinking(id) {
+  document.getElementById(id)?.remove();
+}
+
+// askAI() para os botões de sugestão (mantém compatibilidade)
+function askAI(q) {
+  document.getElementById('aiInput').value = q;
+  sendAIMsg();
+}
+// Manter openAIChat / closeAIChat como estão (não mudar)
+function openAIChat() {
+  aiHistory = []; // reseta contexto ao abrir
+  document.getElementById('aiChatPanel').classList.add('open');
+}
+function closeAIChat() {
+  document.getElementById('aiChatPanel').classList.remove('open');
+}
+function addAIMsg(text, type) {
+  const box = document.getElementById('aiMsgs');
+  const div = document.createElement('div');
+  div.className = 'ai-msg ' + type;
+  div.innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+// Adicionar CSS de animação dos dots (colar no &lt;style&gt;)
+// @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+// (já existe no CSS do arquivo base — sem necessidade de duplicar)</pre>
+      </div>
+    </div>
+
+    <div class="alert alert-yellow">
+      <i class="ti ti-alert-triangle"></i>
+      <span>A API key já é injetada automaticamente pelo ambiente claude.ai quando o arquivo roda como Artifact. Se hospedar externamente, adicione <code>Authorization: Bearer SUA_KEY</code> nos headers do fetch.</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MÓDULO 2 — ADMIN EXPANDIDO
+  ══════════════════════════════════════════ -->
+  <div class="module" id="mod2">
+    <div class="module-header">
+      <div class="module-num" style="background:var(--blue)">2</div>
+      <div>
+        <div class="module-title">Admin Expandido</div>
+        <div class="module-desc">Adiciona ao painel administrativo: categorias de produto, produtos digitais (além de planos), edição de textos que refletem no site ao vivo, e tabela de categorias gerenciável.</div>
+        <span class="module-badge badge-expand">Expande código existente</span>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <div class="demo-label"><i class="ti ti-eye"></i> Preview do Admin expandido</div>
+      <div class="admin-demo">
+        <div class="admin-demo-tabs">
+          <div class="admin-demo-tab active" onclick="adminDemoTab(this,'t1')">Produtos</div>
+          <div class="admin-demo-tab" onclick="adminDemoTab(this,'t2')">Categorias</div>
+          <div class="admin-demo-tab" onclick="adminDemoTab(this,'t3')">Textos do Site</div>
+        </div>
+        <div class="admin-demo-body">
+          <div id="t1">
+            <table class="admin-demo-table">
+              <tr><th>Nome</th><th>Tipo</th><th>Preço</th><th>Status</th><th></th></tr>
+              <tr><td>BG Review 45min</td><td><span class="tag-cat tag-plan">Plano</span></td><td style="color:var(--yellow)">R$29,90</td><td><span class="tag-cat tag-digital" style="background:rgba(0,200,83,.15);color:#00c853">Ativo</span></td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button></td></tr>
+              <tr><td>BG Review Pro</td><td><span class="tag-cat tag-plan">Plano</span></td><td style="color:var(--yellow)">R$55,90</td><td><span class="tag-cat tag-digital" style="background:rgba(0,200,83,.15);color:#00c853">Ativo</span></td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button></td></tr>
+              <tr><td>BG Elite</td><td><span class="tag-cat tag-plan">Plano</span></td><td style="color:var(--yellow)">R$189,90</td><td><span class="tag-cat tag-digital" style="background:rgba(0,200,83,.15);color:#00c853">Ativo</span></td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button></td></tr>
+              <tr><td>Guia Estratégico PDF</td><td><span class="tag-cat tag-digital">Digital</span></td><td style="color:var(--yellow)">R$19,90</td><td><span class="tag-cat tag-digital" style="background:rgba(0,200,83,.15);color:#00c853">Ativo</span></td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button></td></tr>
+              <tr><td>Pack Drops + Rotates</td><td><span class="tag-cat tag-bundle">Bundle</span></td><td style="color:var(--yellow)">R$89,90</td><td><span class="tag-cat" style="background:rgba(255,215,0,.1);color:var(--yellow)">Rascunho</span></td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button></td></tr>
+            </table>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn-sm" style="background:rgba(255,215,0,.1);color:var(--yellow);padding:8px 14px;font-size:12px"><i class="ti ti-plus" style="font-size:12px"></i> Novo Produto Digital</button>
+            </div>
+          </div>
+          <div id="t2" style="display:none">
+            <table class="admin-demo-table">
+              <tr><th>Categoria</th><th>Slug</th><th>Produtos</th><th></th></tr>
+              <tr><td>Planos de Mentoria</td><td style="color:var(--muted);font-family:monospace">planos</td><td>3</td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button> <button class="btn-sm btn-del"><i class="ti ti-trash" style="font-size:11px"></i></button></td></tr>
+              <tr><td>Produtos Digitais</td><td style="color:var(--muted);font-family:monospace">digital</td><td>1</td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button> <button class="btn-sm btn-del"><i class="ti ti-trash" style="font-size:11px"></i></button></td></tr>
+              <tr><td>Bundles</td><td style="color:var(--muted);font-family:monospace">bundle</td><td>1</td><td><button class="btn-sm btn-edit"><i class="ti ti-edit" style="font-size:11px"></i> Editar</button> <button class="btn-sm btn-del"><i class="ti ti-trash" style="font-size:11px"></i></button></td></tr>
+            </table>
+            <div style="margin-top:12px"><button class="btn-sm" style="background:rgba(255,215,0,.1);color:var(--yellow);padding:8px 14px;font-size:12px"><i class="ti ti-plus" style="font-size:12px"></i> Nova Categoria</button></div>
+          </div>
+          <div id="t3" style="display:none">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="background:#050505;border:1px solid var(--border);border-radius:6px;padding:12px">
+                <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Hero — Título</div>
+                <input style="width:100%;background:#111;border:1px solid var(--border);border-radius:4px;padding:8px;color:#fff;font-size:13px;font-family:'Barlow',sans-serif" value="ELEVE SEU JOGO AO PRÓXIMO NÍVEL" id="demoHeroTitle"/>
+              </div>
+              <div style="background:#050505;border:1px solid var(--border);border-radius:6px;padding:12px">
+                <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Hero — Subtítulo</div>
+                <textarea style="width:100%;background:#111;border:1px solid var(--border);border-radius:4px;padding:8px;color:#fff;font-size:13px;font-family:'Barlow',sans-serif;resize:vertical" rows="2">VOD Reviews profissionais, mentorias personalizadas e treinamento competitivo para você dominar o Fortnite.</textarea>
+              </div>
+              <div style="background:#050505;border:1px solid var(--border);border-radius:6px;padding:12px">
+                <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Chave PIX</div>
+                <input style="width:100%;background:#111;border:1px solid var(--border);border-radius:4px;padding:8px;color:var(--yellow);font-size:13px;font-family:'Barlow',sans-serif" value="bgbeginninggame@pix.com"/>
+              </div>
+              <button class="btn-sm" style="background:var(--yellow);color:#000;padding:10px 20px;font-size:13px;align-self:flex-start" onclick="toast('✓ Textos salvos e aplicados ao site!','success')"><i class="ti ti-device-floppy" style="font-size:13px"></i> Salvar e Aplicar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-map-pin"></i> Passo 1 — Adicionar categorias e produtos digitais ao DB</div>
+      <div class="step-desc">Localize a constante <code>DB</code> no <code>&lt;script&gt;</code> e adicione as novas propriedades ao final do objeto:</div>
+      <div class="where-tag">Dentro do objeto DB = { ... }, antes do último }</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code2')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code2">  // — Adicionar estas linhas ao objeto DB existente —
+  categories: () => DB.get('categories') || defaultCategories,
+  saveCategories: (c) => DB.set('categories', c),
+  products: () => DB.get('products') || [],
+  saveProducts: (p) => DB.set('products', p),
+  siteTexts: () => DB.get('siteTexts') || defaultTexts,
+  saveTexts: (t) => DB.set('siteTexts', t),</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 2 — Adicionar os defaults abaixo de defaultPlans</div>
+      <div class="where-tag">Logo após a linha: const defaultPlans = [ ... ];</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code3')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code3">const defaultCategories = [
+  { id: 1, name: 'Planos de Mentoria', slug: 'planos' },
+  { id: 2, name: 'Produtos Digitais',  slug: 'digital' },
+  { id: 3, name: 'Bundles',            slug: 'bundle' }
+];
+
+const defaultTexts = {
+  heroTitle:    'ELEVE SEU JOGO AO PRÓXIMO NÍVEL',
+  heroSubtitle: 'VOD Reviews profissionais, mentorias personalizadas e treinamento competitivo para você dominar o Fortnite. Da análise à vitória.',
+  pixKey:       'bgbeginninggame@pix.com',
+  discordLink:  'https://discord.gg/CfRMETMYF',
+  discordUser:  'BGFTN'
+};</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 3 — Novas abas no painel admin</div>
+      <div class="step-desc">No HTML, dentro de <code>&lt;div class="admin-sidebar"&gt;</code>, adicione após o item "Conteúdo":</div>
+      <div class="where-tag">Após: &lt;div class="admin-nav-item" onclick="adminTab('content')"&gt;...Conteúdo...&lt;/div&gt;</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code4')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code4">&lt;div class="admin-nav-item" onclick="adminTab('categories')"&gt;
+  &lt;i class="ti ti-tags"&gt;&lt;/i&gt; Categorias
+&lt;/div&gt;
+&lt;div class="admin-nav-item" onclick="adminTab('digital')"&gt;
+  &lt;i class="ti ti-file-zip"&gt;&lt;/i&gt; Produtos Digitais
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 4 — Seções HTML das novas abas (colar dentro de .admin-main)</div>
+      <div class="where-tag">Após a &lt;div class="admin-section" id="as-content"&gt;...&lt;/div&gt; existente</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code5')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code5">&lt;!-- CATEGORIAS --&gt;
+&lt;div class="admin-section" id="as-categories"&gt;
+  &lt;div class="admin-header"&gt;
+    &lt;div class="admin-title"&gt;Categorias&lt;/div&gt;
+    &lt;button class="btn btn-yellow" onclick="openCategoryModal()"&gt;
+      &lt;i class="ti ti-plus"&gt;&lt;/i&gt; Nova Categoria
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden"&gt;
+    &lt;table class="data-table"&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Nome&lt;/th&gt;&lt;th&gt;Slug&lt;/th&gt;&lt;th&gt;Produtos&lt;/th&gt;&lt;th style="text-align:right"&gt;Ações&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody id="adminCategoriesTable"&gt;&lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- PRODUTOS DIGITAIS --&gt;
+&lt;div class="admin-section" id="as-digital"&gt;
+  &lt;div class="admin-header"&gt;
+    &lt;div class="admin-title"&gt;Produtos Digitais&lt;/div&gt;
+    &lt;button class="btn btn-yellow" onclick="openDigitalModal()"&gt;
+      &lt;i class="ti ti-plus"&gt;&lt;/i&gt; Novo Produto
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden"&gt;
+    &lt;table class="data-table"&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Nome&lt;/th&gt;&lt;th&gt;Categoria&lt;/th&gt;&lt;th&gt;Preço&lt;/th&gt;&lt;th&gt;Arquivo&lt;/th&gt;&lt;th style="text-align:right"&gt;Ações&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody id="adminDigitalTable"&gt;&lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 5 — Modais de Categoria e Produto Digital</div>
+      <div class="step-desc">Colar antes do fechamento do <code>&lt;body&gt;</code> (antes de <code>&lt;/body&gt;</code>):</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code6')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code6">&lt;!-- MODAL CATEGORIA --&gt;
+&lt;div class="modal-overlay" id="categoryModal"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;button class="modal-close" onclick="closeModal('categoryModal')"&gt;&lt;i class="ti ti-x"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;div class="modal-title" id="categoryModalTitle"&gt;Nova Categoria&lt;/div&gt;
+    &lt;div class="modal-sub"&gt;Organiza seus produtos em grupos&lt;/div&gt;
+    &lt;input type="hidden" id="catEditId"/&gt;
+    &lt;div class="form-group"&gt;
+      &lt;label class="form-label"&gt;Nome da Categoria&lt;/label&gt;
+      &lt;input class="form-input" id="catName" placeholder="Ex: Produtos Digitais"/&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+      &lt;label class="form-label"&gt;Slug (URL)&lt;/label&gt;
+      &lt;input class="form-input" id="catSlug" placeholder="produtos-digitais"/&gt;
+    &lt;/div&gt;
+    &lt;button class="btn btn-yellow btn-full" onclick="saveCategory()"&gt;
+      &lt;i class="ti ti-device-floppy"&gt;&lt;/i&gt; Salvar
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- MODAL PRODUTO DIGITAL --&gt;
+&lt;div class="modal-overlay" id="digitalModal"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;button class="modal-close" onclick="closeModal('digitalModal')"&gt;&lt;i class="ti ti-x"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;div class="modal-title" id="digitalModalTitle"&gt;Novo Produto Digital&lt;/div&gt;
+    &lt;div class="modal-sub"&gt;PDFs, guias, planilhas e outros arquivos&lt;/div&gt;
+    &lt;input type="hidden" id="digEditId"/&gt;
+    &lt;div class="form-group"&gt;
+      &lt;label class="form-label"&gt;Nome do Produto&lt;/label&gt;
+      &lt;input class="form-input" id="digName" placeholder="Ex: Guia Estratégico PDF"/&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+      &lt;div class="form-group"&gt;
+        &lt;label class="form-label"&gt;Preço (R$)&lt;/label&gt;
+        &lt;input class="form-input" id="digPrice" placeholder="19.90"/&gt;
+      &lt;/div&gt;
+      &lt;div class="form-group"&gt;
+        &lt;label class="form-label"&gt;Categoria&lt;/label&gt;
+        &lt;select class="form-input" id="digCategory"&gt;&lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+      &lt;label class="form-label"&gt;Descrição&lt;/label&gt;
+      &lt;input class="form-input" id="digDesc" placeholder="Breve descrição do produto"/&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+      &lt;label class="form-label"&gt;Link do Arquivo (Google Drive, Dropbox etc.)&lt;/label&gt;
+      &lt;input class="form-input" id="digFile" placeholder="https://drive.google.com/..."/&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+      &lt;label class="form-label"&gt;Status&lt;/label&gt;
+      &lt;select class="form-input" id="digStatus"&gt;
+        &lt;option value="active"&gt;Ativo&lt;/option&gt;
+        &lt;option value="draft"&gt;Rascunho&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;button class="btn btn-yellow btn-full" onclick="saveDigital()"&gt;
+      &lt;i class="ti ti-device-floppy"&gt;&lt;/i&gt; Salvar Produto
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 6 — Funções JS para categorias, produtos digitais e textos dinâmicos</div>
+      <div class="step-desc">Adicionar no <code>&lt;script&gt;</code> antes do fechamento, após a função <code>init()</code>:</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code7')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code7">// ============ CATEGORIAS ============
+function openCategoryModal(id) {
+  document.getElementById('categoryModalTitle').textContent = id ? 'Editar Categoria' : 'Nova Categoria';
+  document.getElementById('catEditId').value = id || '';
+  if (id) {
+    const cat = DB.categories().find(c => c.id === id);
+    if (cat) { document.getElementById('catName').value = cat.name; document.getElementById('catSlug').value = cat.slug; }
+  } else {
+    document.getElementById('catName').value = '';
+    document.getElementById('catSlug').value = '';
+  }
+  document.getElementById('categoryModal').classList.add('open');
+}
+function saveCategory() {
+  const id = document.getElementById('catEditId').value;
+  const name = document.getElementById('catName').value.trim();
+  const slug = document.getElementById('catSlug').value.trim().toLowerCase().replace(/\s+/g, '-');
+  if (!name) { toast('Informe o nome da categoria', 'error'); return; }
+  const cats = DB.categories();
+  const cat = { id: id ? parseInt(id) : Date.now(), name, slug };
+  if (id) { const i = cats.findIndex(c => c.id === parseInt(id)); if (i > -1) cats[i] = cat; else cats.push(cat); }
+  else cats.push(cat);
+  DB.saveCategories(cats);
+  closeModal('categoryModal');
+  renderAdminCategories();
+  toast('Categoria salva!', 'success');
+}
+function deleteCategory(id) {
+  if (!confirm('Remover categoria?')) return;
+  DB.saveCategories(DB.categories().filter(c => c.id !== id));
+  renderAdminCategories();
+  toast('Categoria removida!', 'success');
+}
+function renderAdminCategories() {
+  const cats = DB.categories();
+  const prods = DB.products();
+  const plans = DB.plans();
+  document.getElementById('adminCategoriesTable').innerHTML = cats.map(c => `
+    &lt;tr&gt;
+      &lt;td style="color:#fff;font-weight:600"&gt;${c.name}&lt;/td&gt;
+      &lt;td style="font-family:monospace;color:var(--muted)"&gt;${c.slug}&lt;/td&gt;
+      &lt;td&gt;${prods.filter(p => p.category === c.slug).length + (c.slug === 'planos' ? plans.length : 0)}&lt;/td&gt;
+      &lt;td&gt;
+        &lt;button class="action-btn action-edit" onclick="openCategoryModal(${c.id})"&gt;&lt;i class="ti ti-edit"&gt;&lt;/i&gt; Editar&lt;/button&gt;
+        &lt;button class="action-btn action-del" onclick="deleteCategory(${c.id})"&gt;&lt;i class="ti ti-trash"&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;`).join('');
+}
+
+// ============ PRODUTOS DIGITAIS ============
+function openDigitalModal(id) {
+  document.getElementById('digitalModalTitle').textContent = id ? 'Editar Produto' : 'Novo Produto Digital';
+  document.getElementById('digEditId').value = id || '';
+  const select = document.getElementById('digCategory');
+  select.innerHTML = DB.categories().map(c => `&lt;option value="${c.slug}"&gt;${c.name}&lt;/option&gt;`).join('');
+  if (id) {
+    const prod = DB.products().find(p => p.id === id);
+    if (prod) {
+      document.getElementById('digName').value = prod.name;
+      document.getElementById('digPrice').value = prod.price;
+      document.getElementById('digCategory').value = prod.category;
+      document.getElementById('digDesc').value = prod.desc;
+      document.getElementById('digFile').value = prod.file;
+      document.getElementById('digStatus').value = prod.status;
+    }
+  } else {
+    ['digName','digPrice','digDesc','digFile'].forEach(i => document.getElementById(i).value = '');
+  }
+  document.getElementById('digitalModal').classList.add('open');
+}
+function saveDigital() {
+  const id = document.getElementById('digEditId').value;
+  const prod = {
+    id: id ? parseInt(id) : Date.now(),
+    name: document.getElementById('digName').value.trim(),
+    price: document.getElementById('digPrice').value,
+    category: document.getElementById('digCategory').value,
+    desc: document.getElementById('digDesc').value,
+    file: document.getElementById('digFile').value,
+    status: document.getElementById('digStatus').value
+  };
+  if (!prod.name || !prod.price) { toast('Preencha nome e preço', 'error'); return; }
+  const prods = DB.products();
+  if (id) { const i = prods.findIndex(p => p.id === parseInt(id)); if (i > -1) prods[i] = prod; else prods.push(prod); }
+  else prods.push(prod);
+  DB.saveProducts(prods);
+  closeModal('digitalModal');
+  renderAdminDigital();
+  toast('Produto digital salvo!', 'success');
+}
+function deleteDigital(id) {
+  if (!confirm('Remover produto?')) return;
+  DB.saveProducts(DB.products().filter(p => p.id !== id));
+  renderAdminDigital();
+  toast('Produto removido!', 'success');
+}
+function renderAdminDigital() {
+  const prods = DB.products();
+  const el = document.getElementById('adminDigitalTable');
+  el.innerHTML = prods.length ? prods.map(p => `
+    &lt;tr&gt;
+      &lt;td style="color:#fff;font-weight:600"&gt;${p.name}&lt;/td&gt;
+      &lt;td&gt;&lt;span class="chip chip-green"&gt;${p.category}&lt;/span&gt;&lt;/td&gt;
+      &lt;td style="color:var(--yellow);font-weight:700"&gt;R$ ${formatPrice(p.price)}&lt;/td&gt;
+      &lt;td&gt;&lt;a href="${p.file}" target="_blank" style="color:var(--yellow);font-size:12px"&gt;&lt;i class="ti ti-external-link"&gt;&lt;/i&gt; Ver&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;
+        &lt;button class="action-btn action-edit" onclick="openDigitalModal(${p.id})"&gt;&lt;i class="ti ti-edit"&gt;&lt;/i&gt; Editar&lt;/button&gt;
+        &lt;button class="action-btn action-del" onclick="deleteDigital(${p.id})"&gt;&lt;i class="ti ti-trash"&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;`).join('')
+    : '&lt;tr&gt;&lt;td colspan="5" style="text-align:center;color:var(--muted);padding:32px"&gt;Nenhum produto digital cadastrado.&lt;/td&gt;&lt;/tr&gt;';
+}
+
+// ============ TEXTOS DINÂMICOS DO SITE ============
+function saveSiteTexts() {
+  const texts = {
+    heroTitle:    document.getElementById('adminHeroTitle')?.value || DB.siteTexts().heroTitle,
+    heroSubtitle: document.getElementById('adminHeroSub')?.value   || DB.siteTexts().heroSubtitle,
+    pixKey:       document.getElementById('pixKeyAdmin')?.value    || DB.siteTexts().pixKey,
+    discordLink:  document.getElementById('adminDiscordLink')?.value || DB.siteTexts().discordLink
+  };
+  DB.saveTexts(texts);
+  applyTexts(texts);
+  toast('Textos aplicados ao site!', 'success');
+}
+function applyTexts(texts) {
+  // Aplica em tempo real no DOM
+  const heroDesc = document.querySelector('.hero-desc');
+  if (heroDesc) heroDesc.textContent = texts.heroSubtitle;
+  // Atualiza links do Discord
+  document.querySelectorAll('a[href*="discord.gg"]').forEach(el => el.href = texts.discordLink);
+  // Atualiza chave PIX na tela de checkout
+  const pixKey = document.querySelector('.pix-key strong');
+  if (pixKey) pixKey.textContent = texts.pixKey;
+}
+
+// ============ ADMIN TAB — atualizar a função adminTab existente ============
+// Substituir a função adminTab original por esta versão expandida:
+function adminTab(t) {
+  const tabs = ['dashboard','plans','orders','users','payments','content','categories','digital'];
+  document.querySelectorAll('.admin-nav-item').forEach((el, i) => el.classList.toggle('active', tabs[i] === t));
+  document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
+  const section = document.getElementById('as-' + t);
+  if (section) section.classList.add('active');
+  if (t === 'categories') renderAdminCategories();
+  if (t === 'digital') renderAdminDigital();
+}
+
+// Chamar applyTexts no init para carregar textos salvos:
+// (adicionar ao final da função init())
+// applyTexts(DB.siteTexts());
+// — E também substituir os botões "Salvar" no painel de conteúdo
+// — para chamarem saveSiteTexts() em vez de toast()</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 7 — Atualizar o painel "Conteúdo" existente para usar IDs e chamar saveSiteTexts()</div>
+      <div class="step-desc">No HTML do admin, dentro de <code>&lt;div class="admin-section" id="as-content"&gt;</code>, adicione IDs nos inputs e mude o onclick dos botões:</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code8')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code8">&lt;!-- Substituir o bloco "Textos do Hero" por: --&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="form-label"&gt;Título principal&lt;/label&gt;
+  &lt;input class="form-input" id="adminHeroTitle" value="ELEVE SEU JOGO AO PRÓXIMO NÍVEL"/&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="form-label"&gt;Subtítulo&lt;/label&gt;
+  &lt;input class="form-input" id="adminHeroSub"
+    value="VOD Reviews profissionais, mentorias personalizadas..."/&gt;
+&lt;/div&gt;
+&lt;button class="btn btn-yellow" onclick="saveSiteTexts()"&gt;
+  &lt;i class="ti ti-device-floppy"&gt;&lt;/i&gt; Salvar e Aplicar ao Site
+&lt;/button&gt;
+
+&lt;!-- O campo da chave PIX já tem id="pixKeyAdmin" — apenas mudar o onclick: --&gt;
+&lt;!-- De: onclick="toast('Chave PIX atualizada!','success')" --&gt;
+&lt;!-- Para: onclick="saveSiteTexts()" --&gt;
+
+&lt;!-- Adicionar campo para o link do Discord: --&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="form-label"&gt;Link do Servidor Discord&lt;/label&gt;
+  &lt;input class="form-input" id="adminDiscordLink" value="https://discord.gg/CfRMETMYF"/&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MÓDULO 3 — PIX QR CODE REAL
+  ══════════════════════════════════════════ -->
+  <div class="module" id="mod3">
+    <div class="module-header">
+      <div class="module-num" style="background:var(--green);color:#000">3</div>
+      <div>
+        <div class="module-title">PIX QR Code Real</div>
+        <div class="module-desc">Substitui o QR Code CSS falso por um QR Code gerado dinamicamente com o valor exato do pedido, usando a API pública <code>api.qrserver.com</code> (gratuita, sem chave).</div>
+        <span class="module-badge badge-replace">Substitui código existente</span>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <div class="demo-label"><i class="ti ti-eye"></i> Preview do QR Code real gerado</div>
+      <div class="pix-demo">
+        <div id="pixDemoQr" class="pix-demo-qr">
+          <img id="pixDemoImg" src="" alt="QR PIX" style="width:100%;height:100%;object-fit:contain"/>
+        </div>
+        <div class="pix-demo-key">Chave PIX: <strong style="color:var(--yellow)">bgbeginninggame@pix.com</strong></div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Valor: <strong style="color:#fff">R$ 189,90</strong></div>
+        <button class="pix-demo-copy" onclick="demoPixCopy()"><i class="ti ti-copy" style="font-size:11px"></i> Copiar chave PIX</button>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px" id="pixDemoStatus">Gerando QR Code...</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-map-pin"></i> Passo 1 — Substituir o HTML do pix-box no checkout</div>
+      <div class="step-desc">No arquivo base, localize <code>&lt;div class="pix-box"&gt;</code> dentro da página de checkout e substitua pelo novo HTML:</div>
+      <div class="where-tag">Dentro de #page-checkout → .checkout-section → .pix-box</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code9')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code9">&lt;div class="pix-box"&gt;
+  &lt;div style="font-size:13px;color:var(--muted2);margin-bottom:16px"&gt;
+    Escaneie o QR Code ou copie a chave PIX
+  &lt;/div&gt;
+  &lt;!-- QR CODE GERADO DINAMICAMENTE --&gt;
+  &lt;div class="pix-qr" id="pixQrContainer"&gt;
+    &lt;img id="pixQrImg" src="" alt="QR Code PIX"
+      style="width:100%;height:100%;object-fit:contain;border-radius:4px"
+      onerror="this.parentElement.innerHTML='&lt;div style=&quot;font-size:11px;color:#666;padding:4px&quot;&gt;QR indisponível — use a chave PIX&lt;/div&gt;'"/&gt;
+  &lt;/div&gt;
+  &lt;!-- VALOR DINÂMICO --&gt;
+  &lt;div style="font-size:14px;font-weight:700;color:var(--yellow);margin-bottom:8px"&gt;
+    Total: &lt;span id="pixQrAmount"&gt;R$ 0,00&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="pix-key"&gt;Chave PIX: &lt;strong style="color:var(--yellow)" id="pixKeyDisplay"&gt;bgbeginninggame@pix.com&lt;/strong&gt;&lt;/div&gt;
+  &lt;div class="pix-copy" onclick="copyPix()"&gt;&lt;i class="ti ti-copy" style="font-size:12px"&gt;&lt;/i&gt; Copiar chave PIX&lt;/div&gt;
+  &lt;div class="pix-instructions"&gt;
+    &lt;div class="pix-step"&gt;&lt;div class="pix-step-n"&gt;1&lt;/div&gt;&lt;span&gt;Abra o app do seu banco e acesse a área de PIX&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="pix-step"&gt;&lt;div class="pix-step-n"&gt;2&lt;/div&gt;&lt;span&gt;Escaneie o QR Code ou use a chave PIX&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="pix-step"&gt;&lt;div class="pix-step-n"&gt;3&lt;/div&gt;&lt;span&gt;Confirme o valor: &lt;strong style="color:var(--yellow)" id="pixConfirmVal"&gt;&lt;/strong&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="pix-step"&gt;&lt;div class="pix-step-n"&gt;4&lt;/div&gt;&lt;span&gt;Clique em "Confirmar Pagamento" abaixo&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Passo 2 — Funções JS do QR Code real</div>
+      <div class="step-desc">Substituir as funções <code>copyPix()</code> e <code>renderOrderSummary()</code> no script:</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code10')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code10">// ============ PIX QR CODE REAL ============
+// Gera QR code usando api.qrserver.com (gratuita, sem key)
+function generatePixQR(pixKey, amount, receiverName) {
+  // Monta o payload PIX (BR Code — padrão EMV)
+  const payload = buildPixPayload(pixKey, amount, receiverName || 'BG Beginning Game');
+  const encoded = encodeURIComponent(payload);
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encoded}&bgcolor=ffffff&color=000000&margin=8`;
+
+  const img = document.getElementById('pixQrImg');
+  if (img) {
+    img.src = qrUrl;
+    img.alt = 'QR Code PIX — ' + amount;
+  }
+
+  // Atualiza exibição do valor
+  const amtDisplay = document.getElementById('pixQrAmount');
+  const confirmVal = document.getElementById('pixConfirmVal');
+  const formatted = 'R$ ' + parseFloat(amount).toFixed(2).replace('.', ',');
+  if (amtDisplay) amtDisplay.textContent = formatted;
+  if (confirmVal) confirmVal.textContent = formatted;
+}
+
+// Constrói o payload PIX no padrão BR Code (simplificado)
+function buildPixPayload(key, amount, name) {
+  function field(id, value) {
+    const len = String(value.length).padStart(2, '0');
+    return id + len + value;
+  }
+  const merchantAccountInfo = field('00', 'BR.GOV.BCB.PIX') + field('01', key);
+  const merchantAccountInfoField = field('26', merchantAccountInfo);
+  const amountField = field('54', parseFloat(amount).toFixed(2));
+  const nameClean = name.substring(0, 25).replace(/[^a-zA-Z0-9 ]/g, '');
+  const txId = field('05', '***');
+  const additionalData = field('62', txId);
+
+  const payload = '000201'
+    + merchantAccountInfoField
+    + '5204000053039865802BR'
+    + amountField
+    + '5913' + nameClean.substring(0, 13).padEnd(13)
+    + '6008BRASILIA'
+    + additionalData
+    + '6304';
+
+  // CRC16-CCITT
+  const crc = crc16(payload + '6304');
+  return payload + crc;
+}
+
+function crc16(str) {
+  let crc = 0xFFFF;
+  for (let i = 0; i < str.length; i++) {
+    crc ^= str.charCodeAt(i) << 8;
+    for (let j = 0; j < 8; j++) {
+      crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+    }
+  }
+  return ((crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0'));
+}
+
+function copyPix() {
+  const key = DB.siteTexts ? DB.siteTexts().pixKey : 'bgbeginninggame@pix.com';
+  navigator.clipboard.writeText(key).then(() => toast('Chave PIX copiada!', 'success'));
+}
+
+// Sobrescreve renderOrderSummary para também gerar o QR
+function renderOrderSummary() {
+  const items = document.getElementById('orderItems');
+  const total = cart.reduce((a, i) => a + parseFloat(i.price), 0);
+  items.innerHTML = cart.map(i =>
+    `&lt;div class="order-item"&gt;&lt;span class="order-item-name"&gt;${i.name}&lt;/span&gt;&lt;span class="order-item-price"&gt;R$ ${formatPrice(i.price)}&lt;/span&gt;&lt;/div&gt;`
+  ).join('');
+  document.getElementById('orderTotal').textContent = 'R$ ' + formatPrice(total.toString());
+
+  // Gera o QR Code com o valor real
+  const pixKey = DB.siteTexts ? DB.siteTexts().pixKey : 'bgbeginninggame@pix.com';
+  generatePixQR(pixKey, total.toFixed(2), 'BG Beginning Game');
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MÓDULO 4 — MELHORIAS MENORES
+  ══════════════════════════════════════════ -->
+  <div class="module" id="mod4">
+    <div class="module-header">
+      <div class="module-num" style="background:var(--red)">4</div>
+      <div>
+        <div class="module-title">Melhorias Gerais</div>
+        <div class="module-desc">Validação de formulário no checkout, máscara de CPF, contagem de pedidos no admin, e inicialização com textos dinâmicos.</div>
+        <span class="module-badge badge-expand">Expande código existente</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Validação de checkout aprimorada</div>
+      <div class="step-desc">Substituir a função <code>confirmPayment()</code>:</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code11')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code11">function confirmPayment() {
+  const name    = document.getElementById('co-name').value.trim();
+  const email   = document.getElementById('co-email').value.trim();
+  const cpf     = document.getElementById('co-cpf').value.trim();
+  const discord = document.getElementById('co-discord').value.trim();
+
+  if (!name)    { toast('Informe seu nome completo', 'error'); return; }
+  if (!email || !email.includes('@')) { toast('E-mail inválido', 'error'); return; }
+  if (!cpf)     { toast('Informe seu CPF', 'error'); return; }
+  if (!discord) { toast('Informe seu usuário do Discord', 'error'); return; }
+
+  const orderId = 'BG-' + String(Date.now()).slice(-6);
+  const total   = cart.reduce((a, i) => a + parseFloat(i.price), 0);
+
+  const order = {
+    id: orderId,
+    userId:   DB.currentUser()?.id,
+    customer: name,
+    email,
+    cpf,
+    discord,
+    mode:   document.getElementById('co-mode').value,
+    items:  cart.map(i => i.name).join(', '),
+    total:  total.toFixed(2),
+    date:   new Date().toLocaleDateString('pt-BR'),
+    status: 'pending'
+  };
+
+  DB.addOrder(order);
+  document.getElementById('successOrderNum').textContent = '#' + orderId;
+
+  // Limpa carrinho
+  cart = [];
+  sessionStorage.removeItem('bg_cart');
+  updateCartUI();
+
+  showPage('success');
+}</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Máscara de CPF (adicionar ao &lt;script&gt;)</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code12')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code12">// Adicionar no init() ou logo após:
+document.addEventListener('DOMContentLoaded', () => {
+  // Máscara de CPF
+  const cpfInput = document.getElementById('co-cpf');
+  if (cpfInput) {
+    cpfInput.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '').substring(0, 11);
+      if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+      else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+      else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+      this.value = v;
+    });
+  }
+});</pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-title"><i class="ti ti-code"></i> Atualizar a função init() — adicionar ao final</div>
+      <div class="step-desc">Dentro da função <code>init()</code>, antes do último <code>}</code>, adicione:</div>
+      <div class="code-wrap">
+        <button class="copy-btn" onclick="copyCode('code13')"><i class="ti ti-copy"></i> Copiar</button>
+<pre class="code-block" id="code13">  // Aplicar textos salvos pelo admin ao carregar
+  if (DB.siteTexts) {
+    applyTexts(DB.siteTexts());
+    // Preenche campos do painel de conteúdo com valores salvos
+    const texts = DB.siteTexts();
+    const ht = document.getElementById('adminHeroTitle');
+    const hs = document.getElementById('adminHeroSub');
+    const pk = document.getElementById('pixKeyAdmin');
+    const dl = document.getElementById('adminDiscordLink');
+    if (ht) ht.value = texts.heroTitle;
+    if (hs) hs.value = texts.heroSubtitle;
+    if (pk) pk.value = texts.pixKey;
+    if (dl) dl.value = texts.discordLink;
+  }</pre>
+      </div>
+    </div>
+
+    <!-- Checklist final -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-top:20px">
+      <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+        <i class="ti ti-checklist" style="color:var(--yellow)"></i> Checklist final após integrar todos os módulos
+      </div>
+      <div class="checklist">
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>IA Real</strong> — Claude responde perguntas abertas com contexto da BG</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Fallback</strong> — Se a API falhar, usa respostas locais (sem quebrar)</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Admin — Categorias</strong> — Criar, editar e remover categorias</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Admin — Produtos Digitais</strong> — PDFs, guias e arquivos com link</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Admin — Textos Dinâmicos</strong> — Edições refletem no site em tempo real</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>PIX QR Code Real</strong> — Gerado com o valor exato do pedido</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Validação Checkout</strong> — Todos os campos obrigatórios verificados</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Máscara CPF</strong> — Formatação automática no campo CPF</span></div>
+        <div class="check-item done"><i class="ti ti-circle-check-filled"></i><span><strong>Multi-turno IA</strong> — Chat com contexto das últimas 10 mensagens</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /doc -->
+
+<!-- ── TOAST ── -->
+<div id="toastCont" style="position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none"></div>
+
+<script>
+// ── DEMO AI (funcional nesta página) ──
+async function demoSend() {
+  const inp = document.getElementById('demoInput');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  addDemoMsg(msg, 'user');
+  inp.value = '';
+
+  const think = document.createElement('div');
+  think.className = 'ai-thinking';
+  think.innerHTML = '<span></span><span></span><span></span> Claude está digitando...';
+  think.style.cssText = 'display:flex;align-items:center;gap:5px;padding:9px 12px;background:#0d0d0d;border:1px solid rgba(255,215,0,0.1);border-radius:12px;border-bottom-left-radius:4px;font-size:12px;color:var(--muted);align-self:flex-start';
+  think.querySelectorAll('span').forEach((s,i)=>{s.style.cssText=`width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:blink 1.2s ${i*.2}s infinite;display:inline-block`});
+  document.getElementById('demoMsgs').appendChild(think);
+  document.getElementById('demoMsgs').scrollTop = 9999;
+
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:300,
+        system:'Você é o assistente da BG - Beginning Game, empresa de mentorias para Fortnite. Responda em português, de forma breve e amigável. Planos: Review 45min R$29,90 | Review Pro R$55,90 | BG Elite R$189,90. Pagamento via PIX, contato via Discord BGFTN. Máximo 80 palavras.',
+        messages:[{role:'user',content:msg}]
+      })
+    });
+    think.remove();
+    const d = await r.json();
+    addDemoMsg(d.content?.[0]?.text || 'Tente novamente!', 'bot');
+  } catch(e) {
+    think.remove();
+    addDemoMsg('Exemplo de resposta local: Temos 3 planos! Review 45min (R$29,90), Review Pro (R$55,90) e BG Elite (R$189,90). Para comprar, entre no Discord e fale com o BGFTN! 🎮', 'bot');
+  }
+}
+function addDemoMsg(t, tp) {
+  const box = document.getElementById('demoMsgs');
+  const d = document.createElement('div');
+  d.className = 'ai-demo-msg ' + tp;
+  d.innerHTML = t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  box.appendChild(d);
+  box.scrollTop = 9999;
+}
+document.getElementById('demoInput').addEventListener('keydown', e=>{ if(e.key==='Enter') demoSend(); });
+
+// ── DEMO ADMIN TABS ──
+function adminDemoTab(el, id) {
+  document.querySelectorAll('.admin-demo-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['t1','t2','t3'].forEach(t=>document.getElementById(t).style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// ── DEMO PIX QR ──
+function demoPixCopy() {
+  navigator.clipboard.writeText('bgbeginninggame@pix.com')
+    .then(()=>toast('Chave PIX copiada!','success'))
+    .catch(()=>toast('bgbeginninggame@pix.com','info'));
+}
+(function(){
+  const data = encodeURIComponent('BG Beginning Game PIX R$189,90 bgbeginninggame@pix.com');
+  const url  = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${data}&bgcolor=ffffff&color=000000&margin=6`;
+  const img  = document.getElementById('pixDemoImg');
+  const st   = document.getElementById('pixDemoStatus');
+  img.src = url;
+  img.onload  = ()=>{ st.textContent = '✓ QR Code gerado com sucesso'; st.style.color = '#00c853'; };
+  img.onerror = ()=>{ st.textContent = '⚠ API de QR offline — use a chave PIX'; st.style.color = '#FFD700'; };
+})();
+
+// ── COPY CODE ──
+function copyCode(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.textContent).then(()=>toast('Código copiado!','success'));
+}
+
+// ── TOAST ──
+function toast(msg, type='info') {
+  const colors={success:'#00c853',error:'#D90429',info:'#FFD700'};
+  const txt={success:'#fff',error:'#fff',info:'#000'};
+  const c = document.getElementById('toastCont');
+  const t = document.createElement('div');
+  t.style.cssText=`background:${colors[type]};color:${txt[type]};padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.4);animation:fadeIn .3s;min-width:220px;font-family:'Barlow',sans-serif`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='.3s';setTimeout(()=>t.remove(),300)},2800);
+}
+
+// ── BLINK ANIMATION ──
+const st = document.createElement('style');
+st.textContent = '@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}} @keyframes fadeIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}';
+document.head.appendChild(st);
+</script>
+</body>
+</html>
