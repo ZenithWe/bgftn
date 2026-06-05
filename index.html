@@ -1,0 +1,1696 @@
+bash
+
+cat > /mnt/user-data/outputs/bg-beginning-game.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BG - Beginning Game | Mentorias e VOD Reviews Fortnite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+<style>
+/* =====================================================================
+   BG - Beginning Game | Site Completo
+   Cores: #000 Preto | #FFD700 Amarelo | #D90429 Vermelho
+   ===================================================================== */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --black:#000000;--yellow:#FFD700;--red:#D90429;
+  --yellow2:#FFC200;--red2:#ff0033;
+  --dark:#0a0a0a;--card:#111;--card2:#181818;--card3:#222;
+  --border:rgba(255,215,0,0.15);--border2:rgba(255,215,0,0.3);
+  --text:#f0f0f0;--muted:#888;--muted2:#bbb;
+  --r:12px;--r2:8px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--dark);font-family:'Barlow',sans-serif;color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.hidden{display:none!important}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#111}
+::-webkit-scrollbar-thumb{background:var(--yellow);border-radius:3px}
+
+/* ===== CURSOR ===== */
+*{cursor:default}
+a,button,[onclick]{cursor:pointer}
+
+/* ===== PAGES ===== */
+.page{display:none}
+.page.active{display:block}
+
+/* ===== NAVBAR ===== */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:all .3s}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1200px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:1px}
+.nav-logo .bg-flag{width:36px;height:28px;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.1)}
+.nav-logo .flag-b{flex:1;background:#000}
+.nav-logo .flag-y{flex:1;background:#FFD700}
+.nav-logo .flag-r{flex:1;background:#D90429}
+.nav-logo span{color:var(--yellow)}
+.nav-logo em{color:#fff;font-style:normal}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:15px;font-weight:500;color:var(--muted2);transition:color .2s;position:relative}
+.nav-links a:hover{color:var(--yellow)}
+.nav-links a.active{color:var(--yellow)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:var(--r2);font-family:'Barlow',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;padding:10px 20px;letter-spacing:.3px}
+.btn-yellow{background:var(--yellow);color:#000}
+.btn-yellow:hover{background:var(--yellow2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,215,0,0.3)}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(217,4,41,0.4)}
+.btn-outline{background:transparent;color:var(--yellow);border:1.5px solid var(--yellow)}
+.btn-outline:hover{background:rgba(255,215,0,0.1)}
+.btn-dark{background:var(--card2);color:var(--text);border:1px solid var(--border)}
+.btn-dark:hover{background:var(--card3);border-color:var(--border2)}
+.btn-lg{padding:14px 32px;font-size:16px;border-radius:var(--r)}
+.btn-xl{padding:18px 40px;font-size:18px;border-radius:var(--r);font-weight:700}
+.btn-full{width:100%}
+.cart-btn{position:relative}
+.cart-count{position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:var(--red);border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:#000;border-bottom:1px solid var(--border);padding:20px 24px;flex-direction:column;gap:16px;z-index:999}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:18px;font-weight:500;color:var(--muted2);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+
+/* ===== HERO ===== */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:68px}
+.hero-bg{position:absolute;inset:0;background:#000}
+.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 50%,rgba(255,215,0,0.08) 0%,transparent 60%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 40% 40% at 80% 80%,rgba(217,4,41,0.1) 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,215,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:80px 24px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.1);border:1px solid var(--border2);border-radius:50px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--yellow);margin-bottom:20px}
+.hero-badge i{font-size:14px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(56px,8vw,92px);font-weight:900;line-height:.95;letter-spacing:-1px;text-transform:uppercase;margin-bottom:24px}
+.hero-title .line1{color:#fff}
+.hero-title .line2{color:var(--yellow)}
+.hero-title .line3{color:var(--red);-webkit-text-stroke:2px var(--red);-webkit-text-fill-color:transparent}
+.hero-desc{font-size:17px;color:var(--muted2);line-height:1.7;margin-bottom:32px;max-width:480px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:flex;gap:28px}
+.hstat{text-align:center}
+.hstat-n{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--yellow);line-height:1}
+.hstat-l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-card-mockup{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px;position:relative;overflow:hidden;width:100%;max-width:440px}
+.hero-card-mockup::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,215,0,0.15),transparent 70%)}
+.hero-card-mockup::after{content:'';position:absolute;bottom:-40px;left:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(217,4,41,0.12),transparent 70%)}
+.mockup-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(217,4,41,0.15);border:1px solid rgba(217,4,41,0.3);border-radius:50px;padding:5px 12px;font-size:12px;font-weight:700;color:var(--red);margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.mockup-plan-name{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#fff;margin-bottom:8px}
+.mockup-price{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:var(--yellow);line-height:1;margin-bottom:20px}
+.mockup-price span{font-size:22px;color:var(--muted2)}
+.mockup-features{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.mockup-feat{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted2)}
+.mockup-feat i{color:var(--yellow);font-size:16px;flex-shrink:0}
+.float-badge{position:absolute;background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.float-1{top:-16px;right:20px;color:var(--yellow);animation:float 3s ease-in-out infinite}
+.float-2{bottom:-16px;left:20px;color:var(--muted2);animation:float 3s ease-in-out .5s infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ===== SECTION COMMON ===== */
+section{padding:80px 0}
+.sec-header{text-align:center;margin-bottom:56px}
+.sec-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,215,0,0.08);border:1px solid var(--border);border-radius:50px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,5vw,56px);font-weight:900;text-transform:uppercase;line-height:1;margin-bottom:16px}
+.sec-title span{color:var(--yellow)}
+.sec-desc{font-size:17px;color:var(--muted2);max-width:560px;margin:0 auto;line-height:1.7}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--yellow),var(--red));border-radius:2px;margin:16px auto 0}
+
+/* ===== PLANS ===== */
+#plans{background:#000}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;overflow:hidden;transition:all .3s}
+.plan-card:hover{transform:translateY(-6px);border-color:var(--border2);box-shadow:0 20px 60px rgba(255,215,0,0.08)}
+.plan-card.featured{border-color:rgba(217,4,41,0.5);box-shadow:0 0 40px rgba(217,4,41,0.12)}
+.plan-card .glow{position:absolute;top:0;left:0;right:0;height:3px}
+.plan-blue .glow{background:linear-gradient(90deg,#1e90ff,#00bfff)}
+.plan-green .glow{background:linear-gradient(90deg,#00c853,#69f0ae)}
+.plan-red .glow{background:linear-gradient(90deg,var(--red),#ff6b6b)}
+.plan-header{margin-bottom:24px}
+.plan-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:4px 10px;border-radius:4px;margin-bottom:12px}
+.plan-blue .plan-tag{background:rgba(30,144,255,0.15);color:#1e90ff;border:1px solid rgba(30,144,255,0.3)}
+.plan-green .plan-tag{background:rgba(0,200,83,0.15);color:#00c853;border:1px solid rgba(0,200,83,0.3)}
+.plan-red .plan-tag{background:rgba(217,4,41,0.15);color:#ff4060;border:1px solid rgba(217,4,41,0.3)}
+.plan-name{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;margin-bottom:6px}
+.plan-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.plan-price-box{margin:20px 0;padding:20px 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)}
+.plan-price{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--yellow);line-height:1}
+.plan-price .cents{font-size:24px;vertical-align:super}
+.plan-price .period{font-size:16px;color:var(--muted);font-weight:400}
+.plan-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.plan-feat{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--muted2);line-height:1.5}
+.plan-feat i{flex-shrink:0;margin-top:1px}
+.plan-blue .plan-feat i{color:#1e90ff}
+.plan-green .plan-feat i{color:#00c853}
+.plan-red .plan-feat i{color:#ff4060}
+.plan-feat.inherited{color:var(--muted);font-style:italic;font-size:13px}
+.plan-recommended{position:absolute;top:16px;right:16px;background:var(--yellow);color:#000;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ===== COMPARISON TABLE ===== */
+#compare{background:var(--dark)}
+.compare-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.compare-table th{background:#111;padding:16px 20px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-align:center}
+.compare-table th:first-child{text-align:left;color:var(--muted2)}
+.compare-table th.col-blue{color:#1e90ff}
+.compare-table th.col-green{color:#00c853}
+.compare-table th.col-red{color:#ff4060}
+.compare-table td{padding:14px 20px;font-size:14px;text-align:center;border-top:1px solid rgba(255,255,255,0.04)}
+.compare-table td:first-child{text-align:left;color:var(--muted2)}
+.compare-table tr:hover td{background:rgba(255,215,0,0.02)}
+.compare-table .yes{color:#00c853;font-size:18px}
+.compare-table .no{color:rgba(255,255,255,0.2);font-size:18px}
+.compare-table .price-row td{background:rgba(255,215,0,0.04);font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--yellow)}
+.compare-table .price-row td:first-child{color:var(--muted)}
+
+/* ===== INFO SECTION ===== */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;display:flex;gap:16px}
+.info-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,215,0,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-icon i{font-size:24px;color:var(--yellow)}
+.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+.info-text{font-size:14px;color:var(--muted2);line-height:1.7}
+
+/* ===== TESTIMONIALS ===== */
+#testimonials{background:#000}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.test-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;position:relative}
+.test-stars{display:flex;gap:3px;margin-bottom:12px}
+.test-stars i{font-size:14px;color:var(--yellow)}
+.test-text{font-size:15px;color:var(--muted2);line-height:1.7;margin-bottom:16px;font-style:italic}
+.test-text::before{content:'"';font-size:40px;color:rgba(255,215,0,0.15);position:absolute;top:12px;left:16px;font-family:Georgia,serif;line-height:1}
+.test-author{display:flex;align-items:center;gap:10px}
+.test-av{width:40px;height:40px;border-radius:50%;background:var(--card2);border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.test-name{font-size:14px;font-weight:700;color:#fff}
+.test-rank{font-size:12px;color:var(--muted)}
+
+/* ===== FAQ ===== */
+#faq{background:var(--dark)}
+.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;cursor:pointer;font-size:15px;font-weight:600;color:#fff;transition:color .2s}
+.faq-q:hover{color:var(--yellow)}
+.faq-q i{font-size:18px;color:var(--yellow);transition:transform .3s;flex-shrink:0}
+.faq-a{display:none;padding:0 20px 18px;font-size:14px;color:var(--muted2);line-height:1.8;border-top:1px solid rgba(255,255,255,0.04)}
+.faq-item.open .faq-q i{transform:rotate(180deg)}
+.faq-item.open .faq-a{display:block}
+
+/* ===== COUNTER ===== */
+#counter{background:#000;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.counter-grid{display:flex;justify-content:center;gap:80px;padding:56px 0}
+.cnt-item{text-align:center}
+.cnt-num{font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:900;color:var(--yellow);line-height:1;letter-spacing:-2px}
+.cnt-label{font-size:14px;color:var(--muted2);text-transform:uppercase;letter-spacing:2px;margin-top:4px;font-weight:500}
+
+/* ===== DISCORD BANNER ===== */
+.discord-banner{background:linear-gradient(135deg,#1a1a1a 0%,#0f0f0f 100%);border:1px solid rgba(88,101,242,0.3);border-radius:20px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;position:relative;overflow:hidden}
+.discord-banner::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(88,101,242,0.15),transparent 70%)}
+.discord-info h3{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;margin-bottom:8px}
+.discord-info p{font-size:16px;color:var(--muted2);max-width:480px}
+.btn-discord{background:#5865F2;color:#fff;padding:16px 32px;font-size:16px;font-weight:700}
+.btn-discord:hover{background:#4752c4;transform:translateY(-2px);box-shadow:0 10px 30px rgba(88,101,242,0.4)}
+
+/* ===== SUPPORT ===== */
+#support-section{background:var(--dark)}
+.support-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.supp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;cursor:pointer;transition:all .2s}
+.supp-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.supp-icon{width:56px;height:56px;border-radius:16px;background:rgba(255,215,0,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.supp-icon i{font-size:28px;color:var(--yellow)}
+.supp-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+.supp-sub{font-size:13px;color:var(--muted)}
+
+/* ===== PROMO BANNER ===== */
+.promo-banner{background:linear-gradient(135deg,var(--red) 0%,#8b0000 100%);border-radius:16px;padding:32px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:60px}
+.promo-tag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;margin-bottom:6px}
+.promo-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;line-height:1.1}
+.promo-desc{font-size:14px;opacity:.85;margin-top:6px}
+
+/* ===== FOOTER ===== */
+footer{background:#000;border-top:1px solid var(--border);padding:60px 0 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;margin-bottom:14px}
+.footer-logo span{color:var(--yellow)}
+.footer-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:280px}
+.footer-social{display:flex;gap:10px}
+.social-btn{width:36px;height:36px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted2);font-size:18px;transition:all .2s}
+.social-btn:hover{background:rgba(255,215,0,0.1);border-color:var(--border2);color:var(--yellow)}
+.footer-col h4{font-size:14px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul li a{font-size:14px;color:var(--muted);transition:color .2s}
+.footer-col ul li a:hover{color:var(--yellow)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:13px;color:var(--muted)}
+.footer-copy span{color:var(--yellow)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:13px;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--yellow)}
+
+/* ===== FLOATING DISCORD BTN ===== */
+.float-discord{position:fixed;bottom:24px;right:24px;z-index:900;background:#5865F2;color:#fff;border:none;border-radius:50px;padding:14px 20px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 30px rgba(88,101,242,0.5);transition:all .3s;cursor:pointer}
+.float-discord:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(88,101,242,0.6)}
+.float-discord i{font-size:20px}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:20px;width:100%;max-width:480px;padding:36px;position:relative;max-height:90vh;overflow-y:auto}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--card2);border:none;color:var(--muted2);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
+.modal-close:hover{background:var(--card3);color:#fff}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;margin-bottom:4px}
+.modal-sub{font-size:14px;color:var(--muted2);margin-bottom:24px}
+
+/* ===== FORM ===== */
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);margin-bottom:6px;display:block}
+.form-input{width:100%;background:#0d0d0d;border:1.5px solid rgba(255,255,255,0.1);border-radius:var(--r2);padding:12px 14px;font-size:14px;font-family:'Barlow',sans-serif;color:var(--text);outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--yellow)}
+.form-input::placeholder{color:var(--muted)}
+select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.form-divider{text-align:center;color:var(--muted);font-size:13px;margin:16px 0;position:relative}
+.form-divider::before,.form-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:rgba(255,255,255,0.08)}
+.form-divider::before{left:0}.form-divider::after{right:0}
+.form-error{font-size:12px;color:var(--red);margin-top:4px;display:none}
+.form-link{font-size:13px;color:var(--yellow);cursor:pointer;text-align:center;display:block;margin-top:12px}
+.form-link:hover{text-decoration:underline}
+
+/* ===== AUTH TABS ===== */
+.auth-tabs{display:flex;gap:0;background:var(--card2);border-radius:var(--r2);padding:4px;margin-bottom:24px}
+.auth-tab{flex:1;text-align:center;padding:10px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s}
+.auth-tab.active{background:var(--yellow);color:#000}
+
+/* ===== TOAST ===== */
+.toast-container{position:fixed;top:80px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:#fff;color:#111;border-radius:10px;padding:12px 16px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,0.4);animation:toastIn .3s ease;pointer-events:all;min-width:280px}
+.toast i{font-size:18px;flex-shrink:0}
+.toast.success{background:#00c853;color:#fff}
+.toast.error{background:var(--red);color:#fff}
+.toast.info{background:var(--yellow);color:#000}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* ===== CART PANEL ===== */
+.cart-panel{position:fixed;right:0;top:0;bottom:0;width:380px;background:var(--card);border-left:1px solid var(--border);z-index:1500;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+.cart-panel.open{transform:translateX(0)}
+.cart-header{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
+.cart-header h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900}
+.cart-body{flex:1;overflow-y:auto;padding:20px 24px}
+.cart-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.cart-empty i{font-size:48px;margin-bottom:12px;display:block;color:var(--border2)}
+.cart-item{background:var(--card2);border-radius:var(--r2);padding:14px;margin-bottom:12px;display:flex;gap:12px;align-items:center}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:14px;font-weight:600;color:#fff}
+.cart-item-price{font-size:15px;font-weight:700;color:var(--yellow);margin-top:2px}
+.cart-remove{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;transition:color .2s}
+.cart-remove:hover{color:var(--red)}
+.cart-footer{padding:20px 24px;border-top:1px solid rgba(255,255,255,0.06)}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cart-total-label{font-size:16px;font-weight:600;color:var(--muted2)}
+.cart-total-val{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow)}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1400;display:none}
+.cart-overlay.open{display:block}
+
+/* ===== CHECKOUT ===== */
+.checkout-layout{display:grid;grid-template-columns:1fr 360px;gap:32px;padding-top:100px;min-height:100vh;padding-bottom:60px}
+.checkout-main{}
+.checkout-title{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;margin-bottom:32px}
+.checkout-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:20px}
+.checkout-section-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.checkout-section-title i{color:var(--yellow);font-size:18px}
+.checkout-side{position:sticky;top:100px}
+.order-summary{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.order-summary h4{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;margin-bottom:16px;color:#fff}
+.order-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.order-item-name{font-size:14px;color:var(--muted2)}
+.order-item-price{font-size:15px;font-weight:700;color:#fff}
+.order-total{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)}
+.order-total-label{font-size:16px;font-weight:600;color:var(--muted2)}
+.order-total-val{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--yellow)}
+.pix-box{background:#0d0d0d;border:1px solid rgba(255,215,0,0.2);border-radius:var(--r2);padding:20px;text-align:center;margin-top:16px}
+.pix-qr{width:160px;height:160px;background:#fff;border-radius:8px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#333;padding:8px}
+.pix-qr-inner{width:100%;height:100%;background:repeating-conic-gradient(#000 0% 25%,#fff 0% 50%) 0 0 / 8px 8px}
+.pix-key{font-size:13px;color:var(--muted2);margin-bottom:8px}
+.pix-copy{font-size:11px;color:var(--yellow);cursor:pointer;font-weight:600;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);border-radius:4px;padding:4px 10px;display:inline-flex;align-items:center;gap:4px}
+.pix-copy:hover{background:rgba(255,215,0,0.2)}
+.pix-instructions{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.6;text-align:left}
+.pix-step{display:flex;gap:8px;margin-bottom:6px}
+.pix-step-n{width:20px;height:20px;border-radius:50%;background:rgba(255,215,0,0.15);color:var(--yellow);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ===== SUCCESS PAGE ===== */
+.success-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:#000}
+.success-card{background:var(--card);border:1px solid rgba(0,200,83,0.3);border-radius:24px;padding:48px;max-width:520px;width:100%;text-align:center}
+.success-icon{width:80px;height:80px;border-radius:50%;background:rgba(0,200,83,0.1);border:2px solid rgba(0,200,83,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px}
+.success-title{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;margin-bottom:12px}
+.success-desc{font-size:15px;color:var(--muted2);line-height:1.8;margin-bottom:28px}
+.success-order{background:#0d0d0d;border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.success-order-label{font-size:13px;color:var(--muted)}
+.success-order-val{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--yellow)}
+
+/* ===== CLIENT AREA ===== */
+.client-layout{display:grid;grid-template-columns:240px 1fr;gap:32px;padding-top:88px;min-height:100vh;padding-bottom:60px}
+.client-sidebar{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;height:fit-content;position:sticky;top:88px}
+.client-nav{display:flex;flex-direction:column;gap:4px;margin-top:16px}
+.client-nav-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:var(--r2);font-size:14px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .2s}
+.client-nav-item:hover{background:rgba(255,215,0,0.05);color:var(--yellow)}
+.client-nav-item.active{background:rgba(255,215,0,0.1);color:var(--yellow)}
+.client-nav-item i{font-size:18px;flex-shrink:0}
+.client-user{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.client-av{width:44px;height:44px;border-radius:50%;background:rgba(255,215,0,0.15);border:2px solid var(--yellow);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.client-name{font-size:15px;font-weight:700}
+.client-email{font-size:12px;color:var(--muted)}
+.client-content{min-width:0}
+.client-section{display:none}
+.client-section.active{display:block}
+.client-header{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.client-header i{color:var(--yellow)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center}
+.stat-card-n{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--yellow)}
+.stat-card-l{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.8px}
+.order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+.order-badge{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.badge-paid{background:#00c853}
+.badge-pending{background:var(--yellow)}
+.badge-cancelled{background:var(--red)}
+.order-name{font-size:15px;font-weight:600;color:#fff}
+.order-date{font-size:13px;color:var(--muted);margin-top:2px}
+.order-price{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--yellow);margin-left:auto}
+.order-status{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.status-paid{background:rgba(0,200,83,0.15);color:#00c853;border:1px solid rgba(0,200,83,0.3)}
+.status-pending{background:rgba(255,215,0,0.15);color:var(--yellow);border:1px solid rgba(255,215,0,0.3)}
+
+/* ===== ADMIN ===== */
+.admin-layout{display:grid;grid-template-columns:220px 1fr;gap:0;padding-top:68px;min-height:100vh}
+.admin-sidebar{background:#050505;border-right:1px solid var(--border);padding:24px 0;height:calc(100vh - 68px);position:sticky;top:68px;overflow-y:auto}
+.admin-logo{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:16px}
+.admin-logo p{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.admin-nav{display:flex;flex-direction:column;gap:2px;padding:0 10px}
+.admin-nav-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .2s}
+.admin-nav-item:hover{background:rgba(255,215,0,0.05);color:var(--yellow)}
+.admin-nav-item.active{background:rgba(255,215,0,0.1);color:var(--yellow)}
+.admin-nav-item i{font-size:17px;flex-shrink:0}
+.admin-main{padding:32px;overflow-y:auto}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.admin-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900}
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{text-align:left;padding:12px 16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);background:#050505;border-bottom:1px solid var(--border)}
+.data-table td{padding:14px 16px;font-size:14px;color:var(--muted2);border-bottom:1px solid rgba(255,255,255,0.04)}
+.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+.data-table td:last-child{display:flex;gap:6px;justify-content:flex-end}
+.action-btn{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;gap:4px}
+.action-edit{background:rgba(255,215,0,0.1);color:var(--yellow);border:1px solid rgba(255,215,0,0.2)}
+.action-edit:hover{background:rgba(255,215,0,0.2)}
+.action-del{background:rgba(217,4,41,0.1);color:#ff4060;border:1px solid rgba(217,4,41,0.2)}
+.action-del:hover{background:rgba(217,4,41,0.2)}
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.admin-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px}
+.admin-stat-n{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--yellow)}
+.admin-stat-l{font-size:13px;color:var(--muted);margin-top:4px}
+.admin-stat-change{font-size:12px;color:#00c853;margin-top:6px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.chip-blue{background:rgba(30,144,255,0.15);color:#1e90ff}
+.chip-green{background:rgba(0,200,83,0.15);color:#00c853}
+.chip-red{background:rgba(217,4,41,0.15);color:#ff4060}
+.chip-yellow{background:rgba(255,215,0,0.15);color:var(--yellow)}
+
+/* ===== AI CHAT ===== */
+.ai-chat-btn{position:fixed;bottom:90px;right:24px;z-index:900;background:linear-gradient(135deg,var(--yellow),var(--yellow2));color:#000;border:none;border-radius:50px;padding:12px 18px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 30px rgba(255,215,0,0.3);transition:all .3s;cursor:pointer}
+.ai-chat-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(255,215,0,0.4)}
+.ai-chat-btn i{font-size:18px}
+.ai-chat-panel{position:fixed;bottom:160px;right:24px;width:360px;background:var(--card);border:1px solid var(--border2);border-radius:20px;z-index:900;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.6);overflow:hidden}
+.ai-chat-panel.open{display:flex}
+.ai-chat-header{background:#111;padding:16px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.ai-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--yellow),var(--yellow2));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ai-name{font-size:15px;font-weight:700;color:#fff}
+.ai-status{font-size:11px;color:#00c853}
+.ai-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-height:300px;scrollbar-width:thin}
+.ai-msg{max-width:82%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.6}
+.ai-msg.bot{background:#0d0d0d;color:var(--muted2);border-bottom-left-radius:4px;align-self:flex-start}
+.ai-msg.user{background:var(--yellow);color:#000;font-weight:500;border-bottom-right-radius:4px;align-self:flex-end}
+.ai-input-bar{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.ai-input{flex:1;background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:10px 14px;font-size:13px;font-family:'Barlow',sans-serif;color:var(--text);outline:none}
+.ai-input:focus{border-color:var(--yellow)}
+.ai-send{width:36px;height:36px;border-radius:50%;background:var(--yellow);border:none;color:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:transform .2s}
+.ai-send:hover{transform:scale(1.1)}
+.ai-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px}
+.ai-sug{background:rgba(255,215,0,0.08);border:1px solid var(--border);border-radius:20px;padding:5px 10px;font-size:11px;color:var(--muted2);cursor:pointer;transition:all .2s}
+.ai-sug:hover{background:rgba(255,215,0,0.15);color:var(--yellow);border-color:var(--border2)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .hero-content{grid-template-columns:1fr;text-align:center}
+  .hero-visual{display:none}
+  .hero-desc{max-width:100%;margin:0 auto 32px}
+  .hero-ctas{justify-content:center}
+  .hero-stats{justify-content:center}
+  .plans-grid{grid-template-columns:1fr}
+  .test-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .counter-grid{gap:40px}
+  .info-grid{grid-template-columns:1fr}
+  .support-grid{grid-template-columns:1fr 1fr}
+  .checkout-layout{grid-template-columns:1fr;padding-top:88px}
+  .checkout-side{position:static}
+  .client-layout{grid-template-columns:1fr;padding-top:88px}
+  .client-sidebar{position:static;height:auto}
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{display:none}
+  .admin-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero-title{font-size:54px}
+  .test-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .counter-grid{flex-wrap:wrap;justify-content:center;gap:28px;padding:40px 24px}
+  .cnt-num{font-size:48px}
+  .discord-banner{flex-direction:column;text-align:center;padding:28px}
+  .promo-banner{flex-direction:column;text-align:center}
+  .support-grid{grid-template-columns:1fr}
+  .compare-table{font-size:12px}
+  .compare-table th,.compare-table td{padding:10px 8px}
+  .form-row{grid-template-columns:1fr}
+  .ai-chat-panel{width:calc(100vw - 32px);right:16px;bottom:140px}
+  .cart-panel{width:100%}
+  .admin-stats{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      <div class="bg-flag"><div class="flag-b"></div><div class="flag-y"></div><div class="flag-r"></div></div>
+      <div><span>BG</span> <em>·</em> <span style="color:#fff">Beginning</span> <span>Game</span></div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a onclick="showPage('home');scrollTo('plans-section')" class="active">Planos</a>
+      <a onclick="showPage('home');scrollTo('testimonials')">Depoimentos</a>
+      <a onclick="showPage('home');scrollTo('faq-section')">FAQ</a>
+      <a onclick="showPage('home');scrollTo('support-section')">Suporte</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-dark cart-btn" onclick="toggleCart()" id="cartBtn">
+        <i class="ti ti-shopping-cart"></i> Carrinho
+        <span class="cart-count hidden" id="cartCount">0</span>
+      </button>
+      <button class="btn btn-outline" onclick="openAuth('login')" id="loginBtn">Entrar</button>
+      <button class="btn btn-yellow" onclick="showPage('home');scrollTo('plans-section')" id="plansBtn">Ver Planos</button>
+      <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="showPage('home');scrollTo('plans-section');toggleMobile()">Planos</a>
+    <a onclick="showPage('home');scrollTo('testimonials');toggleMobile()">Depoimentos</a>
+    <a onclick="showPage('home');scrollTo('faq-section');toggleMobile()">FAQ</a>
+    <a onclick="showPage('home');scrollTo('support-section');toggleMobile()">Suporte</a>
+    <a onclick="openAuth('login');toggleMobile()" style="color:var(--yellow)">Entrar / Cadastrar</a>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-badge"><i class="ti ti-shield-check-filled"></i> #1 em Mentoria Fortnite do Brasil</div>
+        <h1 class="hero-title">
+          <span class="line1">ELEVE SEU</span><br>
+          <span class="line2">JOGO AO</span><br>
+          <span class="line3">PRÓXIMO</span><br>
+          <span class="line2">NÍVEL</span>
+        </h1>
+        <p class="hero-desc">VOD Reviews profissionais, mentorias personalizadas e treinamento competitivo para você dominar o Fortnite. Da análise à vitória.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-yellow btn-xl" onclick="scrollTo('plans-section')"><i class="ti ti-bolt"></i> Ver Planos</button>
+          <a href="https://discord.gg/CfRMETMYF" target="_blank" class="btn btn-dark btn-xl"><i class="ti ti-brand-discord"></i> Discord</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><div class="hstat-n" data-count="500">0</div><div class="hstat-l">Alunos</div></div>
+          <div class="hstat"><div class="hstat-n" data-count="1200">0</div><div class="hstat-l">Reviews</div></div>
+          <div class="hstat"><div class="hstat-n" data-count="98">0</div><div class="hstat-l">% Satisfação</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-mockup" style="position:relative">
+          <div class="float-badge float-1">⭐ 5.0 Avaliação</div>
+          <div class="mockup-badge"><i class="ti ti-flame"></i> Mais Popular</div>
+          <div class="mockup-plan-name">BG Elite</div>
+          <div class="mockup-price"><span>R$</span> 189<span>,90</span></div>
+          <div class="mockup-features">
+            <div class="mockup-feat"><i class="ti ti-check"></i> 4 sessões de VOD Review</div>
+            <div class="mockup-feat"><i class="ti ti-check"></i> Rotina de treino personalizada</div>
+            <div class="mockup-feat"><i class="ti ti-check"></i> Estratégias Mid/End Game</div>
+            <div class="mockup-feat"><i class="ti ti-check"></i> Acompanhamento pessoal</div>
+            <div class="mockup-feat"><i class="ti ti-check"></i> Evolução monitorada</div>
+          </div>
+          <button class="btn btn-red btn-full" onclick="addToCart('BG Elite','189.90','red')"><i class="ti ti-shopping-cart"></i> Adicionar ao Carrinho</button>
+          <div class="float-badge float-2"><i class="ti ti-users" style="color:var(--yellow)"></i> Disponível para DUO</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <div class="container" style="padding-top:0">
+    <div class="promo-banner">
+      <div>
+        <div class="promo-tag">🔥 Oferta Limitada</div>
+        <div class="promo-title">COMPRE BG ELITE E LEVE<br>UM PARCEIRO DE DUO</div>
+        <div class="promo-desc">Ambos participam das calls de VOD Review. Evoluam juntos!</div>
+      </div>
+      <button class="btn btn-full" style="background:#fff;color:#000;font-size:16px;padding:16px 32px;border-radius:var(--r);min-width:180px;font-weight:800" onclick="scrollTo('plans-section')">Aproveitar →</button>
+    </div>
+  </div>
+
+  <!-- COUNTER -->
+  <div id="counter">
+    <div class="container">
+      <div class="counter-grid">
+        <div class="cnt-item"><div class="cnt-num" data-count="500">0</div><div class="cnt-label">Alunos Atendidos</div></div>
+        <div class="cnt-item"><div class="cnt-num" data-count="1247">0</div><div class="cnt-label">Reviews Realizadas</div></div>
+        <div class="cnt-item"><div class="cnt-num" data-count="3">0</div><div class="cnt-label">Planos Disponíveis</div></div>
+        <div class="cnt-item"><div class="cnt-num" data-count="98">0</div><div class="cnt-label">% de Satisfação</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANS -->
+  <section id="plans-section" style="background:#000">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag"><i class="ti ti-crown"></i> Nossos Planos</div>
+        <h2 class="sec-title">ESCOLHA SEU <span>PLANO</span></h2>
+        <div class="divider"></div>
+        <p class="sec-desc" style="margin-top:16px">Três planos pensados para cada etapa da sua evolução no Fortnite competitivo.</p>
+      </div>
+      <div class="plans-grid" id="plansGrid">
+        <!-- Planos renderizados via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="compare">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag"><i class="ti ti-adjustments"></i> Comparativo</div>
+        <h2 class="sec-title">COMPARE OS <span>PLANOS</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width:40%">Recurso</th>
+              <th class="col-blue">Review 45min</th>
+              <th class="col-green">Review Pro</th>
+              <th class="col-red">BG Elite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>VOD Review</td><td>1x (45 min)</td><td>1x (90 min)</td><td>4x sessões</td></tr>
+            <tr><td>Análise de tomada de decisão</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Identificação de erros</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Bloco de notas detalhado</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Noções de Early/Mid/End Game</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Plano IGL & Fragger</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Rotina de treino personalizada</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Estratégias de rotate e drop</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Acompanhamento pessoal</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Evolução monitorada</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr class="price-row"><td>Preço</td><td>R$ 29,90</td><td>R$ 55,90</td><td>R$ 189,90</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPORTANT INFO -->
+  <section style="background:#000;padding:60px 0">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag"><i class="ti ti-info-circle"></i> Importante</div>
+        <h2 class="sec-title">COMO <span>FUNCIONA</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card"><div class="info-icon"><i class="ti ti-brand-discord"></i></div><div><div class="info-title">Pagamento via Discord</div><div class="info-text">Para realizar os pagamentos, entre na DM do Discord informando qual plano deseja adquirir e se será SOLO ou DUO. Envie o comprovante do PIX obrigatoriamente.</div></div></div>
+        <div class="info-card"><div class="info-icon"><i class="ti ti-user-check"></i></div><div><div class="info-title">Cargo Individual</div><div class="info-text">O cargo no servidor é individual. Apenas quem realizou a compra terá acesso. Porém, em planos DUO, ambos podem participar das calls de VOD Review.</div></div></div>
+        <div class="info-card"><div class="info-icon"><i class="ti ti-receipt"></i></div><div><div class="info-title">Comprovante Obrigatório</div><div class="info-text">Após o pagamento via PIX, envie o comprovante ao usuário BGFTN no Discord para receber acesso imediato aos benefícios do seu plano.</div></div></div>
+        <div class="info-card"><div class="info-icon"><i class="ti ti-clock"></i></div><div><div class="info-title">Acesso Imediato</div><div class="info-text">Após confirmação do pagamento e envio do comprovante, o acesso ao servidor e aos benefícios é liberado em até 24 horas.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" style="background:#000">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag"><i class="ti ti-star-filled"></i> Depoimentos</div>
+        <h2 class="sec-title">O QUE DIZEM <span>NOSSOS ALUNOS</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="test-grid">
+        <div class="test-card"><div class="test-stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div><p class="test-text">A BG Review Pro foi game-changer pra mim. Eu nunca tinha percebido os erros que eu cometia no mid game. Agora meu rank subiu 2 divisões em uma semana.</p><div class="test-author"><div class="test-av">🎮</div><div><div class="test-name">FelipeSilva_FN</div><div class="test-rank">Diamond III → Champion</div></div></div></div>
+        <div class="test-card"><div class="test-stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div><p class="test-text">Comprei o BG Elite com meu duo e foi incrível! As 4 sessões de VOD foram super detalhadas. A rotina de treino personalizada fez toda diferença para nós dois.</p><div class="test-author"><div class="test-av">⚡</div><div><div class="test-name">MatheusGamer</div><div class="test-rank">Trio Cup Winner</div></div></div></div>
+        <div class="test-card"><div class="test-stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div><p class="test-text">Comecei com o Review 45min pra testar, e valeu cada centavo. Identificaram erros que eu nem sabia que tinha. Ja to no Elite agora!</p><div class="test-author"><div class="test-av">🏆</div><div><div class="test-name">RodrigoFTN</div><div class="test-rank">Unranked → Platinum</div></div></div></div>
+        <div class="test-card"><div class="test-stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star"></i></div><p class="test-text">O bloco de notas que recebo após cada sessão é ouro. Tenho um guia personalizado pra melhorar. Nenhum outro serviço de coaching faz isso.</p><div class="test-author"><div class="test-av">🎯</div><div><div class="test-name">BrunoPlays</div><div class="test-rank">Gold → Diamond</div></div></div></div>
+        <div class="test-card"><div class="test-stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div><p class="test-text">Profissionalismo top. A call de Review Pro foi muito bem conduzida, sem enrolação. Já recomendei pra todo meu squad.</p><div class="test-author"><div class="test-av">🔥</div><div><div class="test-name">VictorSquad</div><div class="test-rank">IGL Competitivo</div></div></div></div>
+        <div class="test-card"><div class="test-stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div><p class="test-text">Investi no Elite e o acompanhamento sessão a sessão foi incrível. Sinto minha evolução sendo monitorada de verdade. Vale muito o investimento.</p><div class="test-author"><div class="test-av">💎</div><div><div class="test-name">GustavoFN</div><div class="test-rank">Champion Series Qualifier</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq-section" style="background:var(--dark)">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag"><i class="ti ti-question-mark"></i> FAQ</div>
+        <h2 class="sec-title">DÚVIDAS <span>FREQUENTES</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Como funciona a VOD Review? <i class="ti ti-chevron-down"></i></div><div class="faq-a">Você envia o link do vídeo da sua gameplay e o nosso mentor assiste, analisa e faz uma chamada com você explicando os erros, acertos e pontos de melhoria. Dependendo do plano, você também recebe um bloco de notas com o resumo detalhado.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Como realizo o pagamento? <i class="ti ti-chevron-down"></i></div><div class="faq-a">O pagamento é feito via PIX. Entre na DM do Discord com o usuário BGFTN, informe qual plano deseja e se será SOLO ou DUO. Após o pagamento, envie o comprovante para ter o cargo liberado no servidor.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Posso comprar o plano para DUO? <i class="ti ti-chevron-down"></i></div><div class="faq-a">Sim! Porém o cargo no servidor é individual — apenas quem realizou a compra terá o cargo. Mesmo assim, ambos podem participar das calls de VOD Review. Se quiserem os dois com cargo, cada um deve adquirir o plano.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Quanto tempo tenho para usar o plano? <i class="ti ti-chevron-down"></i></div><div class="faq-a">Após a confirmação do pagamento, as sessões do plano ficam disponíveis por 30 dias. Recomendamos espaçar as sessões para melhor absorção do conteúdo.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Qual nível preciso ter para fazer as reviews? <i class="ti ti-chevron-down"></i></div><div class="faq-a">Todos os níveis são bem-vindos! Desde iniciantes até jogadores de nível competitivo avançado. Adaptamos a análise ao nível de cada aluno para garantir a melhor evolução possível.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Em quanto tempo recebo acesso após o pagamento? <i class="ti ti-chevron-down"></i></div><div class="faq-a">Após enviar o comprovante no Discord, o acesso é liberado em até 24 horas. Geralmente é bem mais rápido durante o horário comercial.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">O que é o plano IGL e Fragger? <i class="ti ti-chevron-down"></i></div><div class="faq-a">IGL (In-Game Leader) é o jogador responsável pelas decisões táticas da equipe. Fragger é o jogador focado em eliminar inimigos. Nos planos Pro e Elite, criamos planos de melhoria específicos para cada papel no time.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCORD BANNER -->
+  <section style="background:#000;padding:60px 0">
+    <div class="container">
+      <div class="discord-banner">
+        <div class="discord-info">
+          <h3><i class="ti ti-brand-discord" style="color:#5865F2;margin-right:10px"></i>Junte-se à nossa comunidade</h3>
+          <p>Mais de 500 jogadores evoluindo juntos. Dicas diárias, torneios internos e suporte 24/7 no nosso servidor do Discord.</p>
+        </div>
+        <a href="https://discord.gg/CfRMETMYF" target="_blank" class="btn btn-discord btn-lg"><i class="ti ti-brand-discord"></i> Entrar no Servidor</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section id="support-section">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag"><i class="ti ti-headset"></i> Suporte</div>
+        <h2 class="sec-title">PRECISA DE <span>AJUDA?</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="support-grid">
+        <div class="supp-card" onclick="openAIChat()"><div class="supp-icon"><i class="ti ti-robot"></i></div><div class="supp-title">Assistente IA</div><div class="supp-sub">Tire dúvidas instantaneamente com nossa IA</div></div>
+        <div class="supp-card" onclick="window.open('https://discord.gg/CfRMETMYF','_blank')"><div class="supp-icon"><i class="ti ti-brand-discord" style="color:#5865F2"></i></div><div class="supp-title">Discord</div><div class="supp-sub">Suporte direto no servidor da BG</div></div>
+        <div class="supp-card"><div class="supp-icon"><i class="ti ti-mail"></i></div><div class="supp-title">E-mail</div><div class="supp-sub">contato@bgbeginninggame.com</div></div>
+        <div class="supp-card"><div class="supp-icon"><i class="ti ti-file-text"></i></div><div class="supp-title">Documentação</div><div class="supp-sub">Guias e tutoriais detalhados</div></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end home page -->
+
+<!-- ==================== CHECKOUT PAGE ==================== -->
+<div class="page" id="page-checkout">
+  <div class="container">
+    <div class="checkout-layout">
+      <div class="checkout-main">
+        <h2 class="checkout-title"><i class="ti ti-shopping-bag" style="color:var(--yellow)"></i> Finalizar Pedido</h2>
+
+        <div class="checkout-section">
+          <div class="checkout-section-title"><i class="ti ti-user"></i> Dados Pessoais</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Nome completo</label><input class="form-input" id="co-name" placeholder="Seu nome"/></div>
+            <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="co-email" placeholder="seu@email.com"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">CPF</label><input class="form-input" id="co-cpf" placeholder="000.000.000-00"/></div>
+            <div class="form-group"><label class="form-label">Discord (usuário)</label><input class="form-input" id="co-discord" placeholder="usuario#0000"/></div>
+          </div>
+          <div class="form-group"><label class="form-label">Modalidade</label><select class="form-input" id="co-mode"><option value="solo">SOLO — Apenas você</option><option value="duo">DUO — Você + 1 parceiro (calls em conjunto)</option></select></div>
+        </div>
+
+        <div class="checkout-section">
+          <div class="checkout-section-title"><i class="ti ti-qrcode"></i> Pagamento via PIX</div>
+          <div class="pix-box">
+            <div style="font-size:13px;color:var(--muted2);margin-bottom:16px">Escaneie o QR Code ou copie a chave PIX</div>
+            <div class="pix-qr"><div class="pix-qr-inner"></div></div>
+            <div class="pix-key">Chave PIX: <strong style="color:var(--yellow)">bgbeginninggame@pix.com</strong></div>
+            <div class="pix-copy" onclick="copyPix()"><i class="ti ti-copy" style="font-size:12px"></i> Copiar chave PIX</div>
+            <div class="pix-instructions">
+              <div class="pix-step"><div class="pix-step-n">1</div><span>Abra o app do seu banco e acesse a área de PIX</span></div>
+              <div class="pix-step"><div class="pix-step-n">2</div><span>Escaneie o QR Code ou use a chave PIX</span></div>
+              <div class="pix-step"><div class="pix-step-n">3</div><span>Confirme o valor e finalize o pagamento</span></div>
+              <div class="pix-step"><div class="pix-step-n">4</div><span>Clique em "Confirmar Pagamento" abaixo</span></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-yellow btn-xl btn-full" onclick="confirmPayment()"><i class="ti ti-check"></i> Confirmar Pagamento</button>
+        <button class="btn btn-dark btn-full" style="margin-top:10px" onclick="showPage('home')"><i class="ti ti-arrow-left"></i> Voltar</button>
+      </div>
+
+      <div class="checkout-side">
+        <div class="order-summary">
+          <h4>Resumo do Pedido</h4>
+          <div id="orderItems">
+            <!-- Renderizado via JS -->
+          </div>
+          <div class="order-total">
+            <span class="order-total-label">Total</span>
+            <span class="order-total-val" id="orderTotal">R$ 0,00</span>
+          </div>
+          <div style="margin-top:16px;padding:12px;background:#0d0d0d;border-radius:var(--r2);font-size:13px;color:var(--muted);line-height:1.6">
+            <i class="ti ti-shield-check" style="color:var(--yellow)"></i> Compra 100% segura<br>
+            <i class="ti ti-clock" style="color:var(--yellow)"></i> Acesso em até 24h<br>
+            <i class="ti ti-brand-discord" style="color:#5865F2"></i> Suporte via Discord
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SUCCESS PAGE ==================== -->
+<div class="page" id="page-success">
+  <div class="success-page">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2 class="success-title">Pagamento Registrado!</h2>
+      <p class="success-desc">Tudo certo! Seu pagamento foi registrado.<br><br>Agora entre no servidor da BG - Beginning Game através do botão abaixo. Após entrar no servidor, abra a DM do usuário <strong style="color:var(--yellow)">BGFTN</strong> e envie o comprovante da sua compra para receber acesso aos benefícios adquiridos.</p>
+      <div class="success-order">
+        <div><div class="success-order-label">Número do Pedido</div><div class="success-order-val" id="successOrderNum">#BG-00001</div></div>
+        <button class="btn btn-dark" style="font-size:12px;padding:8px 14px" onclick="copyOrderNum()"><i class="ti ti-copy"></i> Copiar</button>
+      </div>
+      <a href="https://discord.gg/CfRMETMYF" target="_blank" class="btn btn-full" style="background:#5865F2;color:#fff;font-size:16px;padding:16px;border-radius:var(--r);font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px"><i class="ti ti-brand-discord"></i> Entrar no Servidor</a>
+      <button class="btn btn-outline btn-full" onclick="showPage('home')"><i class="ti ti-home"></i> Voltar ao Início</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CLIENT AREA ==================== -->
+<div class="page" id="page-client">
+  <div class="container">
+    <div class="client-layout">
+      <div class="client-sidebar">
+        <div class="client-user">
+          <div class="client-av">🎮</div>
+          <div><div class="client-name" id="clientName">Usuário</div><div class="client-email" id="clientEmail">email@exemplo.com</div></div>
+        </div>
+        <nav class="client-nav">
+          <div class="client-nav-item active" onclick="clientTab('dashboard')"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+          <div class="client-nav-item" onclick="clientTab('orders')"><i class="ti ti-shopping-bag"></i> Meus Pedidos</div>
+          <div class="client-nav-item" onclick="clientTab('profile')"><i class="ti ti-user"></i> Meu Perfil</div>
+          <div class="client-nav-item" onclick="clientTab('support')"><i class="ti ti-headset"></i> Suporte</div>
+          <div class="client-nav-item" style="margin-top:20px;color:rgba(217,4,41,0.8)" onclick="logout()"><i class="ti ti-logout"></i> Sair</div>
+        </nav>
+      </div>
+      <div class="client-content">
+
+        <div class="client-section active" id="cs-dashboard">
+          <div class="client-header"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-card-n" id="cs-orders-count">0</div><div class="stat-card-l">Pedidos</div></div>
+            <div class="stat-card"><div class="stat-card-n">0</div><div class="stat-card-l">Reviews</div></div>
+            <div class="stat-card"><div class="stat-card-n">Gold</div><div class="stat-card-l">Rank Atual</div></div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Próximos Passos</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#0d0d0d;border-radius:var(--r2)"><div style="width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.1);display:flex;align-items:center;justify-content:center"><i class="ti ti-brand-discord" style="color:#5865F2"></i></div><span style="font-size:14px;color:var(--muted2)">Entre no servidor da BG no Discord</span><a href="https://discord.gg/CfRMETMYF" target="_blank" class="btn btn-dark" style="margin-left:auto;font-size:12px;padding:6px 12px">Entrar</a></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#0d0d0d;border-radius:var(--r2)"><div style="width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.1);display:flex;align-items:center;justify-content:center"><i class="ti ti-video" style="color:var(--yellow)"></i></div><span style="font-size:14px;color:var(--muted2)">Prepare seu vídeo para a Review</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#0d0d0d;border-radius:var(--r2)"><div style="width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.1);display:flex;align-items:center;justify-content:center"><i class="ti ti-calendar" style="color:var(--yellow)"></i></div><span style="font-size:14px;color:var(--muted2)">Agende sua sessão via Discord</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-section" id="cs-orders">
+          <div class="client-header"><i class="ti ti-shopping-bag"></i> Meus Pedidos</div>
+          <div id="clientOrdersList"><div style="text-align:center;padding:48px;color:var(--muted)"><i class="ti ti-shopping-bag" style="font-size:48px;display:block;margin-bottom:12px;opacity:.3"></i>Nenhum pedido ainda.</div></div>
+        </div>
+
+        <div class="client-section" id="cs-profile">
+          <div class="client-header"><i class="ti ti-user"></i> Meu Perfil</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px">
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="profileName" placeholder="Seu nome"/></div>
+              <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="profileEmail" placeholder="seu@email.com" disabled/></div>
+            </div>
+            <div class="form-group"><label class="form-label">Discord</label><input class="form-input" id="profileDiscord" placeholder="usuario#0000"/></div>
+            <button class="btn btn-yellow" onclick="saveProfile()"><i class="ti ti-device-floppy"></i> Salvar</button>
+          </div>
+        </div>
+
+        <div class="client-section" id="cs-support">
+          <div class="client-header"><i class="ti ti-headset"></i> Suporte</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="supp-card" onclick="openAIChat()"><div class="supp-icon"><i class="ti ti-robot"></i></div><div class="supp-title">Assistente IA</div><div class="supp-sub">Tire dúvidas instantaneamente</div></div>
+            <div class="supp-card" onclick="window.open('https://discord.gg/CfRMETMYF','_blank')"><div class="supp-icon"><i class="ti ti-brand-discord" style="color:#5865F2"></i></div><div class="supp-title">Discord</div><div class="supp-sub">Suporte direto na comunidade</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN PAGE ==================== -->
+<div class="page" id="page-admin">
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="nav-logo" style="font-size:18px">
+          <div class="bg-flag" style="width:28px;height:22px"><div class="flag-b"></div><div class="flag-y"></div><div class="flag-r"></div></div>
+          <span style="color:var(--yellow)">BG</span> <span style="color:#fff">Admin</span>
+        </div>
+        <p>Painel Administrativo</p>
+      </div>
+      <nav class="admin-nav">
+        <div class="admin-nav-item active" onclick="adminTab('dashboard')"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+        <div class="admin-nav-item" onclick="adminTab('plans')"><i class="ti ti-crown"></i> Planos</div>
+        <div class="admin-nav-item" onclick="adminTab('orders')"><i class="ti ti-shopping-bag"></i> Pedidos</div>
+        <div class="admin-nav-item" onclick="adminTab('users')"><i class="ti ti-users"></i> Usuários</div>
+        <div class="admin-nav-item" onclick="adminTab('payments')"><i class="ti ti-cash"></i> Pagamentos</div>
+        <div class="admin-nav-item" onclick="adminTab('content')"><i class="ti ti-file-text"></i> Conteúdo</div>
+        <div class="admin-nav-item" style="margin-top:20px" onclick="showPage('home')"><i class="ti ti-arrow-left"></i> Voltar ao Site</div>
+      </nav>
+    </div>
+
+    <div class="admin-main">
+      <!-- Dashboard -->
+      <div class="admin-section active" id="as-dashboard">
+        <div class="admin-header"><div class="admin-title">Dashboard</div><div style="font-size:13px;color:var(--muted)">Bem-vindo, Admin</div></div>
+        <div class="admin-stats">
+          <div class="admin-stat"><div class="admin-stat-n">R$847</div><div class="admin-stat-l">Receita Hoje</div><div class="admin-stat-change">↑ 12% vs ontem</div></div>
+          <div class="admin-stat"><div class="admin-stat-n" id="admin-orders-total">0</div><div class="admin-stat-l">Pedidos Total</div><div class="admin-stat-change">↑ Atualizado</div></div>
+          <div class="admin-stat"><div class="admin-stat-n" id="admin-users-total">0</div><div class="admin-stat-l">Usuários</div><div class="admin-stat-change">↑ Crescendo</div></div>
+          <div class="admin-stat"><div class="admin-stat-n">3</div><div class="admin-stat-l">Planos Ativos</div><div class="admin-stat-change">Todos online</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Pedidos Recentes</div>
+            <div id="adminRecentOrders"><div style="color:var(--muted);font-size:14px">Nenhum pedido ainda.</div></div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Planos Populares</div>
+            <div id="adminPopularPlans"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plans Admin -->
+      <div class="admin-section" id="as-plans">
+        <div class="admin-header"><div class="admin-title">Gerenciar Planos</div><button class="btn btn-yellow" onclick="openPlanModal()"><i class="ti ti-plus"></i> Novo Plano</button></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+          <table class="data-table"><thead><tr><th>Nome</th><th>Preço</th><th>Cor</th><th>Status</th><th style="text-align:right">Ações</th></tr></thead>
+          <tbody id="adminPlansTable"></tbody></table>
+        </div>
+      </div>
+
+      <!-- Orders Admin -->
+      <div class="admin-section" id="as-orders">
+        <div class="admin-header"><div class="admin-title">Pedidos</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+          <table class="data-table"><thead><tr><th>#</th><th>Cliente</th><th>Plano</th><th>Valor</th><th>Data</th><th>Status</th></tr></thead>
+          <tbody id="adminOrdersTable"></tbody></table>
+        </div>
+      </div>
+
+      <!-- Users Admin -->
+      <div class="admin-section" id="as-users">
+        <div class="admin-header"><div class="admin-title">Usuários</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+          <table class="data-table"><thead><tr><th>Nome</th><th>E-mail</th><th>Discord</th><th>Cadastro</th><th>Status</th></tr></thead>
+          <tbody id="adminUsersTable"></tbody></table>
+        </div>
+      </div>
+
+      <!-- Payments Admin -->
+      <div class="admin-section" id="as-payments">
+        <div class="admin-header"><div class="admin-title">Pagamentos</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+          <table class="data-table"><thead><tr><th>Pedido</th><th>Valor</th><th>Método</th><th>Data</th><th>Status</th></tr></thead>
+          <tbody id="adminPaymentsTable"></tbody></table>
+        </div>
+      </div>
+
+      <!-- Content Admin -->
+      <div class="admin-section" id="as-content">
+        <div class="admin-header"><div class="admin-title">Gerenciar Conteúdo</div></div>
+        <div style="display:grid;gap:20px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Textos do Hero</div>
+            <div class="form-group"><label class="form-label">Título principal</label><input class="form-input" value="ELEVE SEU JOGO AO PRÓXIMO NÍVEL"/></div>
+            <div class="form-group"><label class="form-label">Subtítulo</label><input class="form-input" value="VOD Reviews profissionais, mentorias personalizadas..."/></div>
+            <button class="btn btn-yellow" onclick="toast('Conteúdo salvo!','success')"><i class="ti ti-device-floppy"></i> Salvar</button>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Chave PIX</div>
+            <div class="form-group"><label class="form-label">Chave PIX</label><input class="form-input" value="bgbeginninggame@pix.com" id="pixKeyAdmin"/></div>
+            <button class="btn btn-yellow" onclick="toast('Chave PIX atualizada!','success')"><i class="ti ti-device-floppy"></i> Salvar</button>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Link do Discord</div>
+            <div class="form-group"><label class="form-label">Link do Servidor</label><input class="form-input" value="https://discord.gg/CfRMETMYF"/></div>
+            <button class="btn btn-yellow" onclick="toast('Link atualizado!','success')"><i class="ti ti-device-floppy"></i> Salvar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FOOTER (only on home) ==================== -->
+<footer id="mainFooter">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span>BG</span> · Beginning <span>Game</span></div>
+        <p class="footer-desc">Mentorias, VOD Reviews e treinamento competitivo para elevar seu jogo no Fortnite. Do iniciante ao competitivo.</p>
+        <div class="footer-social">
+          <a href="https://discord.gg/CfRMETMYF" target="_blank" class="social-btn"><i class="ti ti-brand-discord"></i></a>
+          <a href="#" class="social-btn"><i class="ti ti-brand-twitter"></i></a>
+          <a href="#" class="social-btn"><i class="ti ti-brand-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="ti ti-brand-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Planos</h4><ul><li><a onclick="scrollTo('plans-section')">BG Review 45min</a></li><li><a onclick="scrollTo('plans-section')">BG Review Pro</a></li><li><a onclick="scrollTo('plans-section')">BG Elite</a></li></ul></div>
+      <div class="footer-col"><h4>Links</h4><ul><li><a onclick="scrollTo('plans-section')">Planos</a></li><li><a onclick="scrollTo('testimonials')">Depoimentos</a></li><li><a onclick="scrollTo('faq-section')">FAQ</a></li><li><a onclick="scrollTo('support-section')">Suporte</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="#" onclick="openModal('privacy')">Política de Privacidade</a></li><li><a href="#" onclick="openModal('terms')">Termos de Uso</a></li><li><a href="https://discord.gg/CfRMETMYF" target="_blank">Discord</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 <span>BG - Beginning Game</span>. Todos os direitos reservados.</div>
+      <div class="footer-links"><a onclick="openModal('privacy')">Privacidade</a><a onclick="openModal('terms')">Termos</a><a href="https://discord.gg/CfRMETMYF" target="_blank">Discord</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://discord.gg/CfRMETMYF" target="_blank" class="float-discord" id="floatDiscord">
+  <i class="ti ti-brand-discord"></i> Discord
+</a>
+<button class="ai-chat-btn" id="aiChatBtn" onclick="openAIChat()">
+  <i class="ti ti-robot"></i> Assistente IA
+</button>
+
+<!-- AI CHAT PANEL -->
+<div class="ai-chat-panel" id="aiChatPanel">
+  <div class="ai-chat-header">
+    <div class="ai-av">🤖</div>
+    <div><div class="ai-name">BG Assistant</div><div class="ai-status">● Online agora</div></div>
+    <button style="margin-left:auto;background:none;border:none;color:var(--muted2);font-size:20px;cursor:pointer" onclick="closeAIChat()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="ai-msgs" id="aiMsgs">
+    <div class="ai-msg bot">Olá! Sou o assistente da <strong>BG - Beginning Game</strong> 🎮<br><br>Posso te ajudar com dúvidas sobre os planos, formas de pagamento, acesso ao servidor e muito mais. Como posso te ajudar?</div>
+  </div>
+  <div class="ai-suggestions" id="aiSugs">
+    <div class="ai-sug" onclick="askAI('Quais são os planos disponíveis?')">📋 Ver planos</div>
+    <div class="ai-sug" onclick="askAI('Como faço o pagamento?')">💳 Pagamento</div>
+    <div class="ai-sug" onclick="askAI('Como entro no servidor?')">🎮 Servidor</div>
+    <div class="ai-sug" onclick="askAI('O que é VOD Review?')">🎬 VOD Review</div>
+  </div>
+  <div class="ai-input-bar">
+    <input class="ai-input" id="aiInput" placeholder="Digite sua dúvida..." onkeydown="if(event.key==='Enter')sendAIMsg()"/>
+    <button class="ai-send" onclick="sendAIMsg()"><i class="ti ti-send"></i></button>
+  </div>
+</div>
+
+<!-- CART OVERLAY + PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3><i class="ti ti-shopping-cart" style="color:var(--yellow)"></i> Carrinho</h3>
+    <button class="modal-close" style="position:static" onclick="toggleCart()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty"><i class="ti ti-shopping-cart-off"></i>Seu carrinho está vazio</div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-val" id="cartTotal">R$ 0,00</span>
+    </div>
+    <button class="btn btn-yellow btn-full" onclick="goToCheckout()"><i class="ti ti-arrow-right"></i> Finalizar Compra</button>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('authModal')"><i class="ti ti-x"></i></button>
+    <div class="modal-title" id="authModalTitle">Bem-vindo de volta!</div>
+    <div class="modal-sub">Entre na sua conta BG</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="authTab2('login')">Entrar</div>
+      <div class="auth-tab" onclick="authTab2('register')">Cadastrar</div>
+    </div>
+    <div id="loginForm">
+      <div class="form-group"><label class="form-label">E-mail</label><div style="position:relative"><i class="ti ti-mail" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)"></i><input class="form-input" style="padding-left:36px" id="loginEmail" placeholder="seu@email.com"/></div></div>
+      <div class="form-group"><label class="form-label">Senha</label><div style="position:relative"><i class="ti ti-lock" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)"></i><input class="form-input" style="padding-left:36px" type="password" id="loginPass" placeholder="Sua senha"/></div></div>
+      <button class="btn btn-yellow btn-full" style="margin-top:4px" onclick="doLogin()"><i class="ti ti-login"></i> Entrar</button>
+      <div class="form-divider">ou</div>
+      <button class="btn btn-dark btn-full" onclick="loginAdmin()"><i class="ti ti-shield"></i> Entrar como Admin (demo)</button>
+      <span class="form-link" onclick="authTab2('register')">Não tem conta? Cadastre-se grátis</span>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="regName" placeholder="Seu nome"/></div>
+        <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="regEmail" placeholder="seu@email.com"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Discord</label><input class="form-input" id="regDiscord" placeholder="usuario#0000"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Senha</label><input class="form-input" type="password" id="regPass" placeholder="Senha"/></div>
+        <div class="form-group"><label class="form-label">Confirmar</label><input class="form-input" type="password" id="regPass2" placeholder="Confirmar"/></div>
+      </div>
+      <button class="btn btn-yellow btn-full" onclick="doRegister()"><i class="ti ti-user-plus"></i> Criar Conta</button>
+      <span class="form-link" onclick="authTab2('login')">Já tem conta? Entrar</span>
+    </div>
+  </div>
+</div>
+
+<!-- PLAN EDIT MODAL -->
+<div class="modal-overlay" id="planModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('planModal')"><i class="ti ti-x"></i></button>
+    <div class="modal-title" id="planModalTitle">Novo Plano</div>
+    <div class="modal-sub">Preencha as informações do plano</div>
+    <input type="hidden" id="planEditId"/>
+    <div class="form-group"><label class="form-label">Nome do Plano</label><input class="form-input" id="planName" placeholder="Ex: BG Review Pro"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Preço (R$)</label><input class="form-input" id="planPrice" placeholder="29.90"/></div>
+      <div class="form-group"><label class="form-label">Cor de destaque</label><select class="form-input" id="planColor"><option value="blue">Azul</option><option value="green">Verde</option><option value="red">Vermelho</option><option value="yellow">Amarelo</option></select></div>
+    </div>
+    <div class="form-group"><label class="form-label">Descrição curta</label><input class="form-input" id="planDesc" placeholder="Análise rápida da gameplay"/></div>
+    <div class="form-group"><label class="form-label">Features (uma por linha)</label><textarea class="form-input" id="planFeatures" rows="5" placeholder="VOD Review&#10;Análise de erros&#10;Feedback em tempo real"></textarea></div>
+    <button class="btn btn-yellow btn-full" onclick="savePlan()"><i class="ti ti-device-floppy"></i> Salvar Plano</button>
+  </div>
+</div>
+
+<!-- GENERIC MODAL -->
+<div class="modal-overlay" id="genericModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('genericModal')"><i class="ti ti-x"></i></button>
+    <div class="modal-title" id="genericModalTitle"></div>
+    <div style="padding-top:16px;font-size:14px;color:var(--muted2);line-height:1.8" id="genericModalContent"></div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* ====================================================
+   BG - Beginning Game | App Logic
+   ==================================================== */
+
+// ============ DATABASE (localStorage) ============
+const DB = {
+  get: (k) => JSON.parse(localStorage.getItem('bg_'+k)||'null'),
+  set: (k,v) => localStorage.setItem('bg_'+k,JSON.stringify(v)),
+  users: () => DB.get('users')||[],
+  orders: () => DB.get('orders')||[],
+  plans: () => DB.get('plans')||defaultPlans,
+  addUser: (u) => { const users=DB.users(); users.push(u); DB.set('users',users); },
+  addOrder: (o) => { const orders=DB.orders(); orders.push(o); DB.set('orders',orders); },
+  savePlans: (p) => DB.set('plans',p),
+  currentUser: () => DB.get('currentUser'),
+  setUser: (u) => DB.set('currentUser',u),
+  logout: () => localStorage.removeItem('bg_currentUser')
+};
+
+const defaultPlans = [
+  {
+    id:1, name:'BG Review 45min', price:'29.90', color:'blue',
+    desc:'Análise rápida e objetiva da sua gameplay.',
+    features:['VOD Review (45 minutos)','Tomada de decisão','Identificação dos principais erros','Primeiros ajustes para evolução'],
+    active:true
+  },
+  {
+    id:2, name:'BG Review Pro', price:'55.90', color:'green',
+    desc:'Review completa e aprofundada da gameplay.',
+    features:['Tudo do plano anterior','Análise detalhada de erros e acertos','Bloco de notas com erros e acertos','Noções de Early Game','Noções de Mid Game','Noções de End Game','Plano de melhoria para IGL','Plano de melhoria para Fragger'],
+    active:true, featured:false
+  },
+  {
+    id:3, name:'BG Elite', price:'189.90', color:'red',
+    desc:'Para duplas focadas em evolução competitiva.',
+    features:['Tudo do plano anterior','4 sessões completas de VOD Review','Maximização de drop','Planos de rotate de drop','Estratégias de Mid Game','Rotina de treino personalizada','Acompanhamento pessoal','Evolução monitorada sessão a sessão'],
+    active:true, featured:true, recommended:true
+  }
+];
+
+// ============ STATE ============
+let cart = JSON.parse(sessionStorage.getItem('bg_cart')||'[]');
+let currentPage = 'home';
+
+// ============ PAGE MANAGEMENT ============
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.getElementById('mainFooter').style.display = p==='home'?'block':'none';
+  document.getElementById('floatDiscord').style.display = ['home','client'].includes(p)?'flex':'none';
+  document.getElementById('aiChatBtn').style.display = ['home','client'].includes(p)?'flex':'none';
+  currentPage = p;
+  window.scrollTo(0,0);
+  if(p==='admin') renderAdmin();
+  if(p==='client') renderClient();
+}
+
+function scrollTo(id) {
+  setTimeout(()=>{
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+// ============ NAVBAR ============
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+window.addEventListener('scroll',()=>{
+  const nav = document.getElementById('navbar');
+  nav.style.background = window.scrollY>50 ? 'rgba(0,0,0,0.98)' : 'rgba(0,0,0,0.92)';
+});
+
+// ============ AUTH ============
+function openAuth(tab) {
+  document.getElementById('authModal').classList.add('open');
+  authTab2(tab||'login');
+}
+function authTab2(t) {
+  document.querySelectorAll('.auth-tabs .auth-tab').forEach((el,i)=>el.classList.toggle('active',i===(t==='login'?0:1)));
+  document.getElementById('loginForm').style.display = t==='login'?'block':'none';
+  document.getElementById('registerForm').style.display = t==='register'?'block':'none';
+}
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if(!email||!pass){toast('Preencha todos os campos','error');return;}
+  const users = DB.users();
+  const user = users.find(u=>u.email===email && u.password===pass);
+  if(!user){toast('Credenciais inválidas','error');return;}
+  DB.setUser(user);
+  closeModal('authModal');
+  toast('Bem-vindo de volta, '+user.name+'!','success');
+  updateNavForUser(user);
+}
+function doRegister() {
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const discord=document.getElementById('regDiscord').value.trim();
+  const pass=document.getElementById('regPass').value;
+  const pass2=document.getElementById('regPass2').value;
+  if(!name||!email||!pass){toast('Preencha todos os campos','error');return;}
+  if(pass!==pass2){toast('Senhas não conferem','error');return;}
+  if(DB.users().find(u=>u.email===email)){toast('E-mail já cadastrado','error');return;}
+  const user={id:Date.now(),name,email,discord,password:pass,createdAt:new Date().toLocaleDateString('pt-BR'),isAdmin:false};
+  DB.addUser(user);
+  DB.setUser(user);
+  closeModal('authModal');
+  toast('Conta criada com sucesso! Bem-vindo, '+name+'!','success');
+  updateNavForUser(user);
+}
+function loginAdmin() {
+  const adminUser={id:0,name:'Administrador',email:'admin@bgbeginninggame.com',isAdmin:true};
+  DB.setUser(adminUser);
+  closeModal('authModal');
+  toast('Bem-vindo, Admin!','success');
+  updateNavForUser(adminUser);
+  showPage('admin');
+}
+function logout() {
+  DB.logout();
+  updateNavForUser(null);
+  showPage('home');
+  toast('Você saiu da conta','info');
+}
+function updateNavForUser(user) {
+  const loginBtn=document.getElementById('loginBtn');
+  const plansBtn=document.getElementById('plansBtn');
+  if(user) {
+    loginBtn.textContent='Área do Cliente';
+    loginBtn.onclick=()=>showPage('client');
+    if(user.isAdmin){
+      plansBtn.innerHTML='<i class="ti ti-shield"></i> Admin';
+      plansBtn.onclick=()=>showPage('admin');
+    }
+    renderClient();
+  } else {
+    loginBtn.innerHTML='Entrar';
+    loginBtn.onclick=()=>openAuth('login');
+    plansBtn.innerHTML='Ver Planos';
+    plansBtn.onclick=()=>{showPage('home');scrollTo('plans-section')};
+  }
+}
+
+// ============ PLANS RENDERING ============
+function renderPlans() {
+  const plans = DB.plans();
+  const grid = document.getElementById('plansGrid');
+  if(!grid) return;
+  grid.innerHTML = plans.filter(p=>p.active).map(plan=>`
+    <div class="plan-card plan-${plan.color} ${plan.featured?'featured':''}">
+      <div class="glow"></div>
+      ${plan.recommended?`<div class="plan-recommended">🔥 Recomendado</div>`:''}
+      <div class="plan-header">
+        <div class="plan-tag">${{blue:'Review Inicial',green:'Mais Completo',red:'Premium',yellow:'Especial'}[plan.color]||'Plano'}</div>
+        <div class="plan-name">${plan.name}</div>
+        <div class="plan-desc">${plan.desc}</div>
+      </div>
+      <div class="plan-price-box">
+        <div class="plan-price">
+          <span class="cents" style="font-size:20px">R$</span> ${formatPrice(plan.price).split(',')[0]}<span class="cents">,${formatPrice(plan.price).split(',')[1]||'00'}</span>
+        </div>
+      </div>
+      <div class="plan-features">
+        ${plan.features.map((f,i)=>`<div class="plan-feat ${i>0&&plan.color!=='blue'&&f.includes('anterior')?'inherited':''}"><i class="ti ti-check"></i>${f}</div>`).join('')}
+      </div>
+      <button class="btn btn-full" style="background:${plan.color==='blue'?'#1e90ff':plan.color==='green'?'#00c853':'var(--red)'};color:#fff;padding:14px;font-size:15px;border-radius:var(--r)" onclick="addToCart('${plan.name}','${plan.price}','${plan.color}')">
+        <i class="ti ti-shopping-cart"></i> Adicionar ao Carrinho
+      </button>
+    </div>
+  `).join('');
+}
+function formatPrice(p) {
+  return parseFloat(p).toFixed(2).replace('.',',');
+}
+
+// ============ CART ============
+function addToCart(name, price, color) {
+  if(cart.find(i=>i.name===name)){toast('Plano já está no carrinho!','info');toggleCart();return;}
+  cart.push({name,price,color,qty:1});
+  sessionStorage.setItem('bg_cart',JSON.stringify(cart));
+  updateCartUI();
+  toggleCart();
+  toast(name+' adicionado ao carrinho!','success');
+}
+function removeFromCart(idx) {
+  cart.splice(idx,1);
+  sessionStorage.setItem('bg_cart',JSON.stringify(cart));
+  updateCartUI();
+  renderCartPanel();
+}
+function updateCartUI() {
+  const count=cart.length;
+  const countEl=document.getElementById('cartCount');
+  countEl.classList.toggle('hidden',count===0);
+  countEl.textContent=count;
+}
+function renderCartPanel() {
+  const body=document.getElementById('cartBody');
+  const footer=document.getElementById('cartFooter');
+  if(!cart.length){
+    body.innerHTML='<div class="cart-empty"><i class="ti ti-shopping-cart-off"></i>Seu carrinho está vazio</div>';
+    footer.style.display='none';return;
+  }
+  const total=cart.reduce((a,i)=>a+parseFloat(i.price),0);
+  body.innerHTML=cart.map((item,i)=>`
+    <div class="cart-item">
+      <div style="width:40px;height:40px;border-radius:8px;background:${item.color==='blue'?'rgba(30,144,255,0.15)':item.color==='green'?'rgba(0,200,83,0.15)':'rgba(217,4,41,0.15)'};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎮</div>
+      <div class="cart-item-info"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">R$ ${formatPrice(item.price)}</div></div>
+      <button class="cart-remove" onclick="removeFromCart(${i})"><i class="ti ti-trash"></i></button>
+    </div>`).join('');
+  document.getElementById('cartTotal').textContent='R$ '+formatPrice(total.toString());
+  footer.style.display='block';
+}
+function toggleCart() {
+  renderCartPanel();
+  document.getElementById('cartPanel').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+function goToCheckout() {
+  if(!cart.length){toast('Carrinho vazio!','error');return;}
+  const user=DB.currentUser();
+  if(!user){toast('Faça login para continuar','info');openAuth('login');return;}
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  renderOrderSummary();
+  showPage('checkout');
+}
+function renderOrderSummary() {
+  const items=document.getElementById('orderItems');
+  const total=cart.reduce((a,i)=>a+parseFloat(i.price),0);
+  items.innerHTML=cart.map(i=>`
+    <div class="order-item"><span class="order-item-name">${i.name}</span><span class="order-item-price">R$ ${formatPrice(i.price)}</span></div>`).join('');
+  document.getElementById('orderTotal').textContent='R$ '+formatPrice(total.toString());
+}
+
+// ============ CHECKOUT ============
+function copyPix() {
+  navigator.clipboard.writeText('bgbeginninggame@pix.com').then(()=>toast('Chave PIX copiada!','success'));
+}
+function confirmPayment() {
+  const name=document.getElementById('co-name').value.trim();
+  const email=document.getElementById('co-email').value.trim();
+  if(!name||!email){toast('Preencha seus dados','error');return;}
+  const orderId='BG-'+String(Date.now()).slice(-6);
+  const total=cart.reduce((a,i)=>a+parseFloat(i.price),0);
+  const order={
+    id:orderId,
+    userId:DB.currentUser()?.id,
+    customer:name,
+    email,
+    discord:document.getElementById('co-discord').value,
+    mode:document.getElementById('co-mode').value,
+    items:cart.map(i=>i.name).join(', '),
+    total:total.toFixed(2),
+    date:new Date().toLocaleDateString('pt-BR'),
+    status:'pending'
+  };
+  DB.addOrder(order);
+  document.getElementById('successOrderNum').textContent='#'+orderId;
+  cart=[];
+  sessionStorage.removeItem('bg_cart');
+  updateCartUI();
+  showPage('success');
+}
+function copyOrderNum() {
+  const num=document.getElementById('successOrderNum').textContent;
+  navigator.clipboard.writeText(num).then(()=>toast('Número copiado: '+num,'success'));
+}
+
+// ============ CLIENT AREA ============
+function renderClient() {
+  const user=DB.currentUser();
+  if(!user) return;
+  document.getElementById('clientName').textContent=user.name||'Usuário';
+  document.getElementById('clientEmail').textContent=user.email||'';
+  document.getElementById('profileName').value=user.name||'';
+  document.getElementById('profileEmail').value=user.email||'';
+  document.getElementById('profileDiscord').value=user.discord||'';
+  const orders=DB.orders().filter(o=>o.userId===user.id||o.email===user.email);
+  document.getElementById('cs-orders-count').textContent=orders.length;
+  const ol=document.getElementById('clientOrdersList');
+  if(!orders.length){ol.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted)"><i class="ti ti-shopping-bag" style="font-size:48px;display:block;margin-bottom:12px;opacity:.3"></i>Nenhum pedido ainda.</div>';return;}
+  ol.innerHTML=orders.map(o=>`
+    <div class="order-card">
+      <div class="order-badge badge-${o.status==='paid'?'paid':'pending'}"></div>
+      <div><div class="order-name">${o.items}</div><div class="order-date">${o.date} · Modo: ${o.mode==='duo'?'DUO':'SOLO'}</div></div>
+      <span class="order-status status-${o.status==='paid'?'paid':'pending'}">${o.status==='paid'?'Pago':'Aguardando'}</span>
+      <div class="order-price">R$ ${formatPrice(o.total)}</div>
+    </div>`).join('');
+}
+function clientTab(t) {
+  document.querySelectorAll('.client-nav-item').forEach((el,i)=>{
+    const tabs=['dashboard','orders','profile','support'];
+    el.classList.toggle('active',tabs[i]===t);
+  });
+  document.querySelectorAll('.client-section').forEach(el=>el.classList.remove('active'));
+  document.getElementById('cs-'+t).classList.add('active');
+}
+function saveProfile() {
+  const user=DB.currentUser();
+  if(!user) return;
+  user.name=document.getElementById('profileName').value;
+  user.discord=document.getElementById('profileDiscord').value;
+  DB.setUser(user);
+  const users=DB.users();
+  const idx=users.findIndex(u=>u.id===user.id);
+  if(idx>-1){users[idx]={...users[idx],...user};DB.set('users',users);}
+  toast('Perfil salvo!','success');
+  document.getElementById('clientName').textContent=user.name;
+}
+
+// ============ ADMIN ============
+function adminTab(t) {
+  document.querySelectorAll('.admin-nav-item').forEach((el,i)=>{
+    const tabs=['dashboard','plans','orders','users','payments','content'];
+    el.classList.toggle('active',tabs[i]===t);
+  });
+  document.querySelectorAll('.admin-section').forEach(el=>el.classList.remove('active'));
+  document.getElementById('as-'+t).classList.add('active');
+}
+function renderAdmin() {
+  const plans=DB.plans();
+  const orders=DB.orders();
+  const users=DB.users();
+  document.getElementById('admin-orders-total').textContent=orders.length;
+  document.getElementById('admin-users-total').textContent=users.length;
+  // Plans table
+  const ptable=document.getElementById('adminPlansTable');
+  ptable.innerHTML=plans.map(p=>`
+    <tr>
+      <td style="color:#fff;font-weight:600">${p.name}</td>
+      <td style="color:var(--yellow);font-weight:700">R$ ${formatPrice(p.price)}</td>
+      <td><span class="chip chip-${p.color}">${{blue:'Azul',green:'Verde',red:'Vermelho',yellow:'Amarelo'}[p.color]}</span></td>
+      <td><span class="chip chip-green">Ativo</span></td>
+      <td>
+        <button class="action-btn action-edit" onclick="editPlan(${p.id})"><i class="ti ti-edit"></i> Editar</button>
+        <button class="action-btn action-del" onclick="deletePlan(${p.id})"><i class="ti ti-trash"></i> Remover</button>
+      </td>
+    </tr>`).join('');
+  // Orders table
+  const otable=document.getElementById('adminOrdersTable');
+  const allOrders=[...orders,...mockOrders()];
+  otable.innerHTML=allOrders.length?allOrders.map(o=>`
+    <tr>
+      <td style="color:var(--yellow);font-family:monospace">#${o.id}</td>
+      <td style="color:#fff">${o.customer||o.name}</td>
+      <td>${o.items||o.plan}</td>
+      <td style="color:var(--yellow);font-weight:700">R$ ${formatPrice(o.total)}</td>
+      <td>${o.date}</td>
+      <td><span class="chip chip-${o.status==='paid'?'green':'yellow'}">${o.status==='paid'?'Pago':'Pendente'}</span></td>
+    </tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:32px">Nenhum pedido ainda.</td></tr>';
+  // Users table
+  const utable=document.getElementById('adminUsersTable');
+  utable.innerHTML=users.length?users.map(u=>`
+    <tr>
+      <td style="color:#fff;font-weight:600">${u.name}</td>
+      <td>${u.email}</td>
+      <td style="color:#5865F2">${u.discord||'—'}</td>
+      <td>${u.createdAt}</td>
+      <td><span class="chip chip-green">Ativo</span></td>
+    </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:32px">Nenhum usuário cadastrado.</td></tr>';
+  // Payments
+  const paytable=document.getElementById('adminPaymentsTable');
+  paytable.innerHTML=allOrders.length?allOrders.map(o=>`
+    <tr>
+      <td style="color:var(--yellow);font-family:monospace">#${o.id}</td>
+      <td style="color:var(--yellow);font-weight:700">R$ ${formatPrice(o.total)}</td>
+      <td><i class="ti ti-qrcode" style="color:var(--yellow)"></i> PIX</td>
+      <td>${o.date}</td>
+      <td><span class="chip chip-${o.status==='paid'?'green':'yellow'}">${o.status==='paid'?'Confirmado':'Pendente'}</span></td>
+    </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:32px">Nenhum pagamento.</td></tr>';
+  // Dashboard recent
+  document.getElementById('adminRecentOrders').innerHTML=allOrders.slice(0,3).map(o=>`
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+      <div><div style="font-size:13px;font-weight:600;color:#fff">${o.customer||o.name}</div><div style="font-size:11px;color:var(--muted)">${o.items||o.plan} · ${o.date}</div></div>
+      <div style="font-size:14px;font-weight:700;color:var(--yellow)">R$ ${formatPrice(o.total)}</div>
+    </div>`).join('')||'<div style="color:var(--muted);font-size:14px">Nenhum pedido ainda.</div>';
+  // Popular plans
+  document.getElementById('adminPopularPlans').innerHTML=plans.map(p=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+      <div style="width:8px;height:8px;border-radius:50%;background:${p.color==='blue'?'#1e90ff':p.color==='green'?'#00c853':'var(--red)'}"></div>
+      <span style="font-size:13px;color:#fff;flex:1">${p.name}</span>
+      <span style="font-size:13px;font-weight:700;color:var(--yellow)">R$ ${formatPrice(p.price)}</span>
+    </div>`).join('');
+}
+function mockOrders() {
+  return [
+    {id:'001',name:'Felipe Silva',customer:'Felipe Silva',plan:'BG Elite',items:'BG Elite',total:'189.90',date:'01/06/2025',status:'paid'},
+    {id:'002',name:'Matheus G.',customer:'Matheus G.',plan:'BG Review Pro',items:'BG Review Pro',total:'55.90',date:'31/05/2025',status:'paid'},
+    {id:'003',name:'Rodrigo FTN',customer:'Rodrigo FTN',plan:'BG Review 45min',items:'BG Review 45min',total:'29.90',date:'30/05/2025',status:'pending'}
+  ];
+}
+function openPlanModal(id) {
+  document.getElementById('planModalTitle').textContent=id?'Editar Plano':'Novo Plano';
+  document.getElementById('planEditId').value=id||'';
+  if(id){
+    const plan=DB.plans().find(p=>p.id===id);
+    if(plan){
+      document.getElementById('planName').value=plan.name;
+      document.getElementById('planPrice').value=plan.price;
+      document.getElementById('planColor').value=plan.color;
+      document.getElementById('planDesc').value=plan.desc;
+      document.getElementById('planFeatures').value=plan.features.join('\n');
+    }
+  } else {
+    ['planName','planPrice','planDesc','planFeatures'].forEach(id=>document.getElementById(id).value='');
+  }
+  document.getElementById('planModal').classList.add('open');
+}
+function editPlan(id){openPlanModal(id);}
+function deletePlan(id) {
+  if(!confirm('Remover este plano?')) return;
+  const plans=DB.plans().filter(p=>p.id!==id);
+  DB.savePlans(plans);
+  renderAdmin();
+  renderPlans();
+  toast('Plano removido!','success');
+}
+function savePlan() {
+  const id=document.getElementById('planEditId').value;
+  const plan={
+    id:id?parseInt(id):Date.now(),
+    name:document.getElementById('planName').value,
+    price:document.getElementById('planPrice').value,
+    color:document.getElementById('planColor').value,
+    desc:document.getElementById('planDesc').value,
+    features:document.getElementById('planFeatures').value.split('\n').filter(f=>f.trim()),
+    active:true
+  };
+  if(!plan.name||!plan.price){toast('Preencha os campos obrigatórios','error');return;}
+  const plans=DB.plans();
+  if(id) { const idx=plans.findIndex(p=>p.id===parseInt(id));if(idx>-1)plans[idx]=plan;else plans.push(plan); }
+  else plans.push(plan);
+  DB.savePlans(plans);
+  closeModal('planModal');
+  renderAdmin();
+  renderPlans();
+  toast('Plano salvo com sucesso!','success');
+}
+
+// ============ MODALS ============
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function openModal(type) {
+  const content={
+    privacy:`<h3 style="color:var(--yellow);margin-bottom:12px">Política de Privacidade</h3>
+    <p>A BG - Beginning Game respeita sua privacidade. Coletamos apenas os dados necessários para processar sua compra e fornecer os serviços adquiridos.</p><br>
+    <p><strong>Dados coletados:</strong> Nome, e-mail, Discord e informações de pagamento.</p><br>
+    <p><strong>Uso dos dados:</strong> Processamento de pedidos, envio de confirmações e comunicação sobre seus planos.</p><br>
+    <p><strong>Compartilhamento:</strong> Não vendemos nem compartilhamos seus dados com terceiros.</p><br>
+    <p>Para dúvidas: contato@bgbeginninggame.com</p>`,
+    terms:`<h3 style="color:var(--yellow);margin-bottom:12px">Termos de Uso</h3>
+    <p>Ao adquirir qualquer plano da BG - Beginning Game, você concorda com os seguintes termos:</p><br>
+    <p><strong>1. Serviços:</strong> As sessões de VOD Review são realizadas via Discord e Google Meet.</p><br>
+    <p><strong>2. Pagamento:</strong> Todo pagamento é feito via PIX. O comprovante deve ser enviado ao usuário BGFTN no Discord.</p><br>
+    <p><strong>3. Acesso:</strong> O cargo no servidor é individual e intransferível.</p><br>
+    <p><strong>4. Validade:</strong> As sessões devem ser utilizadas em até 30 dias após a confirmação.</p><br>
+    <p><strong>5. Reembolso:</strong> Reembolso disponível em até 24h após a compra, desde que nenhuma sessão tenha sido realizada.</p>`
+  };
+  document.getElementById('genericModalTitle').textContent=type==='privacy'?'Política de Privacidade':'Termos de Uso';
+  document.getElementById('genericModalContent').innerHTML=content[type];
+  document.getElementById('genericModal').classList.add('open');
+}
+
+// ============ AI CHAT ============
+const aiResponses = {
+  'planos': 'Temos 3 planos disponíveis:\n\n🔵 **BG Review 45min** — R$ 29,90\nReview rápida com análise de tomada de decisão e erros principais.\n\n🟢 **BG Review Pro** — R$ 55,90\nReview completa 1h30 com bloco de notas e noções de Early/Mid/End game.\n\n🔴 **BG Elite** — R$ 189,90\n4 sessões completas com rotina personalizada e acompanhamento individual.',
+  'pagamento': 'O pagamento é feito via **PIX**! Você pode também usar nosso checkout no site.\n\nPasso a passo:\n1. Escolha seu plano\n2. Entre em contato via Discord (BGFTN)\n3. Informe o plano e se é SOLO ou DUO\n4. Realize o PIX\n5. Envie o comprovante → acesso liberado em até 24h!',
+  'servidor': 'Para entrar no servidor:\n\n1. Clique em **Entrar no Servidor** (botão no site)\n2. Link: discord.gg/CfRMETMYF\n3. Após entrar, abra a DM do **BGFTN**\n4. Envie o comprovante da compra\n5. Aguarde a liberação do cargo (até 24h)',
+  'vod': 'A **VOD Review** é uma análise profissional da sua gameplay!\n\nFuncionamento:\n- Você envia o link do vídeo da sua partida\n- Nosso mentor assiste e analisa\n- Realizamos uma call explicando tudo\n- Você recebe feedback detalhado sobre erros e pontos de melhoria\n\nNo plano Pro você também ganha um bloco de notas personalizado!',
+  'duo': 'Sim! Você pode adquirir planos para **DUO**!\n\n⚠️ Importante: O cargo no servidor é **individual** — apenas quem comprou recebe o cargo.\n\nMas ambos podem participar das **calls de VOD Review** juntos!\n\nSe quiserem os dois com cargo, cada um precisa adquirir o plano.',
+  'elite': 'O **BG Elite** é nosso plano premium! R$ 189,90\n\nInclui:\n✓ 4 sessões completas de VOD Review\n✓ Maximização de drop\n✓ Rotinas e estratégias de rotate\n✓ Estratégias de Mid Game\n✓ Rotina de treino personalizada\n✓ Acompanhamento pessoal\n✓ Evolução monitorada sessão a sessão\n\nIdeal para duplas que querem evoluir junto!',
+  'acesso': 'O acesso é liberado em até **24 horas** após a confirmação do pagamento!\n\nMas geralmente é muito mais rápido durante o horário comercial. Após enviar o comprovante no Discord, o cargo é liberado pelo mentor.',
+  'default': 'Boa pergunta! Para informações mais específicas, recomendo entrar em contato direto com o mentor via Discord.\n\n🔗 **discord.gg/CfRMETMYF**\n📩 DM: @BGFTN\n\nPosso te ajudar com dúvidas sobre planos, pagamentos, acesso ao servidor ou VOD Reviews!'
+};
+function getAIResponse(msg) {
+  const m = msg.toLowerCase();
+  if(m.includes('plano')||m.includes('preço')||m.includes('valor')||m.includes('custa')) return aiResponses.planos;
+  if(m.includes('pagamento')||m.includes('pagar')||m.includes('pix')) return aiResponses.pagamento;
+  if(m.includes('servidor')||m.includes('discord')||m.includes('entrar')) return aiResponses.servidor;
+  if(m.includes('vod')||m.includes('review')||m.includes('funciona')) return aiResponses.vod;
+  if(m.includes('duo')||m.includes('dupla')||m.includes('parceiro')) return aiResponses.duo;
+  if(m.includes('elite')) return aiResponses.elite;
+  if(m.includes('acesso')||m.includes('liberado')||m.includes('prazo')||m.includes('quanto tempo')) return aiResponses.acesso;
+  return aiResponses.default;
+}
+function openAIChat() {
+  document.getElementById('aiChatPanel').classList.add('open');
+}
+function closeAIChat() {
+  document.getElementById('aiChatPanel').classList.remove('open');
+}
+function sendAIMsg() {
+  const inp = document.getElementById('aiInput');
+  const msg = inp.value.trim();
+  if(!msg) return;
+  addAIMsg(msg,'user');
+  inp.value='';
+  document.getElementById('aiSugs').style.display='none';
+  setTimeout(()=>{ addAIMsg(getAIResponse(msg),'bot'); },600);
+}
+function askAI(q) {
+  document.getElementById('aiInput').value=q;
+  sendAIMsg();
+}
+function addAIMsg(text,type) {
+  const box=document.getElementById('aiMsgs');
+  const div=document.createElement('div');
+  div.className='ai-msg '+type;
+  div.innerHTML=text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+}
+
+// ============ FAQ ============
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+
+// ============ TOAST ============
+function toast(msg, type='info') {
+  const icons={success:'ti-circle-check',error:'ti-alert-circle',info:'ti-info-circle'};
+  const colors={success:'#00c853',error:'#D90429',info:'var(--yellow)'};
+  const textColors={success:'#fff',error:'#fff',info:'#000'};
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className='toast';
+  t.style.background=colors[type];
+  t.style.color=textColors[type];
+  t.innerHTML=`<i class="ti ${icons[type]}"></i>${msg}`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(20px)';t.style.transition='.3s';setTimeout(()=>t.remove(),300)},3000);
+}
+
+// ============ COUNTER ANIMATION ============
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=parseInt(el.getAttribute('data-count'));
+    let current=0;
+    const step=target/60;
+    const interval=setInterval(()=>{
+      current=Math.min(current+step,target);
+      el.textContent=Math.round(current)+(target===98?'%':target>=500?'+':'');
+      if(current>=target) clearInterval(interval);
+    },25);
+  });
+}
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animateCounters();observer.disconnect();}});
+},{threshold:.3});
+const counterEl=document.getElementById('counter');
+if(counterEl) observer.observe(counterEl);
+
+// ============ INIT ============
+function init() {
+  renderPlans();
+  updateCartUI();
+  const user=DB.currentUser();
+  if(user) updateNavForUser(user);
+  // Close modals on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(el=>{
+    el.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
+HTMLEOF
+echo "File size: $(wc -c < /mnt/user-data/outputs/bg-beginning-game.html) bytes"
